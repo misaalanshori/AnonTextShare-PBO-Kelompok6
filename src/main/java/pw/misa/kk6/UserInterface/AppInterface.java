@@ -12,14 +12,8 @@ abstract public class AppInterface {
 
 	protected DatabaseConnection DatabaseConnection;
 
-	private Document document;
-
-	private Collection collection;
-
-	private DatabaseConnection databaseConnection;
-
-	public void AppInterface(DatabaseConnection DatabaseConnection) {
-
+	public AppInterface(DatabaseConnection DatabaseConnection) {
+            this.DatabaseConnection = DatabaseConnection;
 	}
 
 	public abstract void startUI();
