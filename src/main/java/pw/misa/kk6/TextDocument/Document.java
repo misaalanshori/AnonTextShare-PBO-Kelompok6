@@ -1,7 +1,6 @@
 package pw.misa.kk6.TextDocument;
 
 import pw.misa.kk6.Database.DocumentAccesable;
-import pw.misa.kk6.Database.SimpleDB;
 
 public class Document {
 
@@ -15,40 +14,76 @@ public class Document {
 
 	public String DocumentText;
 
-	private SimpleDB simpleDB;
-
-	private DocumentAccesable documentAccesable;
-
-	public void Document(DocumentAccesable database) {
-
+	public Document(DocumentAccesable database) {
+            this.DocumentsAccess = database;
+            this.DocumentID = database.createDocument("", "");
+            this.DocumentPass = null;
+            this.DocumentTitle = "";
+            this.DocumentText = "";
 	}
 
-	public void Document(DocumentAccesable database, String DocumentID) {
-
+	public Document(DocumentAccesable database, String DocumentID) {
+            if(database.checkDocument(DocumentID)){
+                this.DocumentsAccess = database;
+                this.DocumentID = DocumentID;
+                this.DocumentPass = null;
+                this.DocumentTitle = database.getDocumentTitle(DocumentID);
+                this.DocumentText = database.getDocumentText(DocumentID);
+            }else {
+                System.out.println("Document not found.");
+            }
 	}
 
-	public void Document(DocumentAccesable database, String DocumentID, String DocumentPass) {
-
+	public Document(DocumentAccesable database, String DocumentID, String DocumentPass) {
+            if(database.checkDocument(DocumentID, DocumentPass)){
+                this.DocumentsAccess = database;
+                this.DocumentID = DocumentID;
+                this.DocumentPass = DocumentPass;
+                this.DocumentTitle = database.getDocumentTitle(DocumentID);
+                this.DocumentText = database.getDocumentText(DocumentID);
+            }else {
+                System.out.println("Document not found.");
+            }
 	}
 
 	public void reload() {
-
+            if (this.DocumentID != null) {
+                this.DocumentTitle = this.DocumentsAccess.getDocumentTitle(this.DocumentID);
+                this.DocumentText = this.DocumentsAccess.getDocumentText(this.DocumentID);
+            }
 	}
 
 	public void save() {
-
+            if (this.DocumentID == null) {
+                if (this.DocumentPass != null && !this.DocumentPass.isEmpty()) {
+                    this.DocumentID = this.DocumentsAccess.createDocument(this.DocumentTitle, this.DocumentText, this.DocumentPass);
+                } else {
+                    this.DocumentID = this.DocumentsAccess.createDocument(this.DocumentTitle, this.DocumentText);
+                }   
+            } else if (this.DocumentPass != null && !this.DocumentPass.isEmpty()) {
+                this.DocumentsAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
+                this.DocumentsAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
+            }
 	}
 
 	public boolean isReadOnly() {
-		return false;
+            if (this.DocumentID == null) {
+                return false;
+            } else {
+                if (this.DocumentPass == null || this.DocumentPass.isEmpty()) {
+                    return this.DocumentsAccess.checkDocument(this.DocumentID);
+                } else {
+                    return this.DocumentsAccess.checkDocument(this.DocumentID, this.DocumentPass);
+                }
+            }
 	}
 
 	public void loadPassword(String DocumentPass) {
-
+            this.DocumentPass = DocumentPass;
 	}
 
 	public String getDocumentID() {
-		return null;
+            return this.DocumentID;
 	}
 
 }
