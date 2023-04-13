@@ -16,7 +16,7 @@ public class Document {
 
 	public Document(DocumentAccesable database) {
             this.DocumentsAccess = database;
-            this.DocumentID = database.createDocument("", "");
+            this.DocumentID = null;
             this.DocumentPass = null;
             this.DocumentTitle = "";
             this.DocumentText = "";
@@ -60,7 +60,7 @@ public class Document {
                 } else {
                     this.DocumentID = this.DocumentsAccess.createDocument(this.DocumentTitle, this.DocumentText);
                 }   
-            } else if (this.DocumentPass != null && !this.DocumentPass.isEmpty()) {
+            } else if (!isReadOnly()) {
                 this.DocumentsAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
                 this.DocumentsAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
             }
@@ -71,9 +71,9 @@ public class Document {
                 return false;
             } else {
                 if (this.DocumentPass == null || this.DocumentPass.isEmpty()) {
-                    return this.DocumentsAccess.checkDocument(this.DocumentID);
+                    return true;
                 } else {
-                    return this.DocumentsAccess.checkDocument(this.DocumentID, this.DocumentPass);
+                    return !this.DocumentsAccess.checkDocument(this.DocumentID, this.DocumentPass);
                 }
             }
 	}
