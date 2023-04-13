@@ -4,6 +4,7 @@
 
 package pw.misa.kk6.anontextshare;
 import pw.misa.kk6.UserInterface.*;
+import pw.misa.kk6.Database.SimpleDB;
 /**
  *
  * @author Isabu
@@ -11,7 +12,7 @@ import pw.misa.kk6.UserInterface.*;
 public class AnonTextShare {
 
     public static void main(String[] args) {
-        AppInterface AppUI = new TextInterface();
+        AppInterface AppUI = new TextInterface(new SimpleDB());
         AppUI.startUI();
     }
 }
