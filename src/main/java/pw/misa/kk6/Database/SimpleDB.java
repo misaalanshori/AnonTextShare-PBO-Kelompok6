@@ -21,6 +21,8 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	private HashMap<String, String> idColTitleMap;
 
 	private HashMap<String, List<String>> idColContentMap;
+        
+        private HashMap<String, Integer> idColViewCountMap;
 
 
 	/**
@@ -261,4 +263,24 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             return false;
 	}
 
+        @Override
+        public boolean incrementCollectionViews(String colID) {
+            if (checkCollection(colID)) {
+                idColViewCountMap.replace(colID, idColViewCountMap.get(colID)+1);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public int getCollectionViews(String colID) {
+            if (checkCollection(colID)) {
+                return idColViewCountMap.get(colID);
+            }
+            return -1;
+        }
+
+        
+        
+        
 }
