@@ -99,7 +99,7 @@ public class TextInterface extends AppInterface {
             
             boolean running = true;
             while (running) {
-                System.out.println("Dokumen: " + this.CurrentText.DocumentTitle);
+                System.out.printf("Dokumen: %s (Views: %d)\n", this.CurrentText.DocumentTitle, this.CurrentText.getViewCount());
                 System.out.println("1. View Document");
                 System.out.println("2. Edit Document");
                 System.out.println("3. Delete Document");
@@ -224,7 +224,7 @@ public class TextInterface extends AppInterface {
             boolean running = true;
             
             while (running) {
-                System.out.println("Collection: " + this.CurrentCollection.CollectionTitle);
+                System.out.printf("Collection: %s (Views: %d)\n", this.CurrentCollection.CollectionTitle, this.CurrentCollection.getViewCount());
                 System.out.println("1. View Collection");
                 System.out.println("2. Edit Collection");
                 System.out.println("3. Delete Collection");
@@ -273,7 +273,7 @@ public class TextInterface extends AppInterface {
             System.out.println("isi   : ");
             for (int i = 0; i < this.CurrentCollection.CollectionContents.size(); i++) {
                 Document doc = this.CurrentCollection.CollectionContents.get(i);
-                System.out.printf("%d. %s (%s)\n", i+1, doc.DocumentTitle, doc.getDocumentID());
+                System.out.printf("%d. %s (%s) (Views: %d)\n", i+1, doc.DocumentTitle, doc.getDocumentID(), doc.getViewCount());
             }
 	}
 
