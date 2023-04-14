@@ -13,6 +13,8 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	private HashMap<String, String> idDocTitleMap;
 
 	private HashMap<String, String> idDocContentMap;
+        
+        private HashMap<String, Integer> idDocViewCountMap;
 
 	private HashMap<String, String> idColPassMap;
 
@@ -41,6 +43,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         idDocTitleMap.put(newID, new String(title));
         idDocContentMap.put(newID, new String(text));
         idDocPassMap.put(newID, null);
+        idDocViewCountMap.put(newID, 0);
         return newID;
     }
 
@@ -53,6 +56,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
                 idDocTitleMap.put(newID, new String(title));
                 idDocContentMap.put(newID, new String(text));
                 idDocPassMap.put(newID, docPass);
+                idDocViewCountMap.put(newID, 0);
                 return newID;
 	}
 
@@ -136,6 +140,23 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             return false;
 	}
 
+        
+        @Override
+        public boolean incrementDocumentViews(String docID) {
+            if (checkDocument(docID)) {
+                idDocViewCountMap.replace(docID, idDocViewCountMap.get(docID)+1);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public int getDocumentViews(String docID) {
+            if (checkDocument(docID)) {   
+                return idDocViewCountMap.get(docID);
+            }
+            return -1;
+        }
 
 	/**
 	 * @see Database.CollectionsAccessable#createCollection(String, )
