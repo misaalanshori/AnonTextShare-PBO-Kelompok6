@@ -19,8 +19,6 @@ public interface CollectionsAccessable {
 	public abstract boolean updateCollectionContents(String colID, String colPass, List<String> newContents);
 
 	public abstract boolean deleteCollection(String colID, String colPass);
-        
-        public abstract boolean incrementCollectionViews(String colID);
-        
+
         public abstract int getCollectionViews(String colID);
 }

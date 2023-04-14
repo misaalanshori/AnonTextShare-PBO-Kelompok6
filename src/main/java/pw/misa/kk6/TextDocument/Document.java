@@ -29,7 +29,6 @@ public class Document {
                 this.DocumentPass = null;
                 this.DocumentTitle = database.getDocumentTitle(DocumentID);
                 this.DocumentText = database.getDocumentText(DocumentID);
-                database.incrementDocumentViews(DocumentID);
             }else {
                 System.out.println("Document not found.");
             }
@@ -42,7 +41,6 @@ public class Document {
                 this.DocumentPass = DocumentPass;
                 this.DocumentTitle = database.getDocumentTitle(DocumentID);
                 this.DocumentText = database.getDocumentText(DocumentID);
-                database.incrementDocumentViews(DocumentID);
             }else {
                 System.out.println("Document not found.");
             }

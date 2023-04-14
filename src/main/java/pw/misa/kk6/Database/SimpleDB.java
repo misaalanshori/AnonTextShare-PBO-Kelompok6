@@ -103,6 +103,9 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	 * @see Database.DocumentAccesable#getDocumentText(String)
 	 */
 	public String getDocumentText(String docID) {
+                if (checkDocument(docID)) {
+                    idDocViewCountMap.replace(docID, idDocViewCountMap.get(docID)+1);
+                }
 		return idDocContentMap.get(docID);
 	}
 
@@ -144,15 +147,6 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             return false;
 	}
 
-        
-        @Override
-        public boolean incrementDocumentViews(String docID) {
-            if (checkDocument(docID)) {
-                idDocViewCountMap.replace(docID, idDocViewCountMap.get(docID)+1);
-                return true;
-            }
-            return false;
-        }
 
         @Override
         public int getDocumentViews(String docID) {
@@ -226,6 +220,9 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	 * @see Database.CollectionsAccessable#getCollectionContents(String)
 	 */
 	public List<String> getCollectionContents(String colID) {
+                if (checkCollection(colID)) {
+                    idColViewCountMap.replace(colID, idColViewCountMap.get(colID)+1);
+                }
 		return idColContentMap.get(colID);
 	}
 
@@ -266,15 +263,6 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             }
             return false;
 	}
-
-        @Override
-        public boolean incrementCollectionViews(String colID) {
-            if (checkCollection(colID)) {
-                idColViewCountMap.replace(colID, idColViewCountMap.get(colID)+1);
-                return true;
-            }
-            return false;
-        }
 
         @Override
         public int getCollectionViews(String colID) {

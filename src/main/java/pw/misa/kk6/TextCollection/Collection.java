@@ -34,7 +34,6 @@ public class Collection{
             this.CollectionsAccess = database;
             this.CollectionID = CollectionID;
             this.CollectionPass = null;
-            this.CollectionsAccess.incrementCollectionViews(CollectionID);
             reload();
 	}
 
@@ -43,7 +42,6 @@ public class Collection{
             this.CollectionsAccess = database;
             this.CollectionID = CollectionID;
             this.CollectionPass = CollectionPass;
-            this.CollectionsAccess.incrementCollectionViews(CollectionID);
             reload();
 	}
 

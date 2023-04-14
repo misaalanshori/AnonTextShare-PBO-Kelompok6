@@ -19,8 +19,6 @@ public abstract interface DocumentAccesable {
 	public abstract boolean updateDocumentText(String docID, String docPass, String newContents);
 
 	public abstract boolean deleteDocument(String docID, String docPass);
-        
-        public abstract boolean incrementDocumentViews(String docID);
-        
+
         public abstract int getDocumentViews(String docID);
 }
