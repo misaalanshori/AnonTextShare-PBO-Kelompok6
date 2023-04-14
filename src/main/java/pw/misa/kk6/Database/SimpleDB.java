@@ -32,12 +32,14 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         
         
 	public SimpleDB() {
-                this.idDocPassMap = new HashMap<String, String>();
-                this.idDocTitleMap = new HashMap<String, String>();
-                this.idDocContentMap = new HashMap<String, String>();
-                this.idColPassMap = new HashMap<String, String>();
-                this.idColTitleMap = new HashMap<String, String>();
-                this.idColContentMap = new HashMap<String, List<String>>();
+                this.idDocPassMap = new HashMap<>();
+                this.idDocTitleMap = new HashMap<>();
+                this.idDocContentMap = new HashMap<>();
+                this.idDocViewCountMap = new HashMap<>();
+                this.idColPassMap = new HashMap<>();
+                this.idColTitleMap = new HashMap<>();
+                this.idColContentMap = new HashMap<>();
+                this.idColViewCountMap = new HashMap<>();
 	}
 
     public String createDocument(String title, String text) {
