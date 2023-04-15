@@ -77,6 +77,10 @@ public class Document {
                 }
             }
 	}
+        
+        public int getViewCount() {
+            return this.DocumentsAccess.getDocumentViews(DocumentID);
+        }
 
 	public void loadPassword(String DocumentPass) {
             this.DocumentPass = DocumentPass;

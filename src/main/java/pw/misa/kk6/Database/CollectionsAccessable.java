@@ -20,4 +20,5 @@ public interface CollectionsAccessable {
 
 	public abstract boolean deleteCollection(String colID, String colPass);
 
+        public abstract int getCollectionViews(String colID);
 }

@@ -87,6 +87,10 @@ public class Collection{
             }		
 	}
 
+        public int getViewCount() {
+            return this.CollectionsAccess.getCollectionViews(CollectionID);
+        }
+        
 	public void loadPassword(String CollectionPass) {
              this.CollectionPass = CollectionPass; 
 	}

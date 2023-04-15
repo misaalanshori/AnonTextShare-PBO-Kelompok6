@@ -20,4 +20,5 @@ public abstract interface DocumentAccesable {
 
 	public abstract boolean deleteDocument(String docID, String docPass);
 
+        public abstract int getDocumentViews(String docID);
 }

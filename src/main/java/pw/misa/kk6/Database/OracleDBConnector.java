@@ -74,6 +74,11 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
 	public boolean deleteDocument(String docID, String docPass) {
             return false;
 	}
+        
+        @Override
+        public int getDocumentViews(String docID) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
 
 
 	/**
@@ -146,5 +151,14 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
 	public boolean deleteCollection(String colID, String colPass) {
             return false;
 	}
+
+        @Override
+        public int getCollectionViews(String colID) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+
+
+
 
 }
