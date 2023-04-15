@@ -2,6 +2,7 @@ package pw.misa.kk6.Database;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import pw.misa.kk6.AnonymousText.Comment;
 
 /**
  * Implementasi database sederhana, menggunakan java hashmap untuk menyimpan data. Dimana key hashmap yang digunakan adalah kode id dokumen/koleksi dan valuenya adalah isi dokumen atau isi koleksinya
@@ -16,6 +17,8 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         
         private HashMap<String, Integer> idDocViewCountMap;
 
+        private HashMap<String, List<Comment>> idDocCommentsMap;
+        
 	private HashMap<String, String> idColPassMap;
 
 	private HashMap<String, String> idColTitleMap;
@@ -23,6 +26,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	private HashMap<String, List<String>> idColContentMap;
         
         private HashMap<String, Integer> idColViewCountMap;
+        
 
 
 	/**
@@ -36,6 +40,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
                 this.idDocTitleMap = new HashMap<>();
                 this.idDocContentMap = new HashMap<>();
                 this.idDocViewCountMap = new HashMap<>();
+                this.idDocCommentsMap = new HashMap<>();
                 this.idColPassMap = new HashMap<>();
                 this.idColTitleMap = new HashMap<>();
                 this.idColContentMap = new HashMap<>();
@@ -156,6 +161,28 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             return -1;
         }
 
+        @Override
+        public boolean addDocumentComment(String docID, String name, String text) {
+            if (checkDocument(docID)) {
+                idDocCommentsMap.get(docID).add(new Comment(name, text));
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public List<Comment> getDocumentComments(String docID) {
+            if (checkDocument(docID)) {
+                return new ArrayList(idDocCommentsMap.get(docID));
+            }
+            return null;
+            
+        }
+
+        
+        
+        
+        
 	/**
 	 * @see Database.CollectionsAccessable#createCollection(String, )
 	 */
