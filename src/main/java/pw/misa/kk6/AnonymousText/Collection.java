@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Collection{
 
-	private CollectionsAccessable CollectionsAccess;
+	private DatabaseConnection DatabaseAccess;
 
 	private String CollectionID;
 
@@ -17,11 +17,8 @@ public class Collection{
 
 	public List<Document> CollectionContents;
 
-        private DocumentAccesable DocumentAccess;
-        
 	public Collection(DatabaseConnection database) {
-            this.DocumentAccess = database;
-            this.CollectionsAccess = database;
+            this.DatabaseAccess = database;
             this.CollectionID = null;
             this.CollectionPass = null;
             this.CollectionTitle = "";
@@ -29,16 +26,14 @@ public class Collection{
 	}
 
 	public Collection(DatabaseConnection database, String CollectionID) {
-            this.DocumentAccess = database;
-            this.CollectionsAccess = database;
+            this.DatabaseAccess = database;
             this.CollectionID = CollectionID;
             this.CollectionPass = null;
             reload();
 	}
 
 	public Collection(DatabaseConnection database, String CollectionID, String CollectionPass) {
-            this.DocumentAccess = database;
-            this.CollectionsAccess = database;
+            this.DatabaseAccess = database;
             this.CollectionID = CollectionID;
             this.CollectionPass = CollectionPass;
             reload();
@@ -46,12 +41,12 @@ public class Collection{
 
 	public void reload() {
             if(this.CollectionID != null){
-                if(CollectionsAccess.checkCollection(CollectionID)){
-                    this.CollectionTitle = CollectionsAccess.getCollectionTitle(CollectionID);
-                    List<String> ListBaru = CollectionsAccess.getCollectionContents(CollectionID);
+                if(DatabaseAccess.checkCollection(CollectionID)){
+                    this.CollectionTitle = DatabaseAccess.getCollectionTitle(CollectionID);
+                    List<String> ListBaru = DatabaseAccess.getCollectionContents(CollectionID);
                     List<Document> DocumentBaru = new ArrayList();
                     for(int i = 0 ; i < ListBaru.size(); i++){
-                        DocumentBaru.add(new Document(DocumentAccess, ListBaru.get(i)));
+                        DocumentBaru.add(new Document(DatabaseAccess, ListBaru.get(i)));
                     }
                     CollectionContents = DocumentBaru;
                 }
@@ -65,12 +60,12 @@ public class Collection{
             }
             
             if(CollectionPass != null && CollectionID == null){
-                this.CollectionID = CollectionsAccess.createCollection(CollectionTitle, ListBaru, this.CollectionPass);
+                this.CollectionID = DatabaseAccess.createCollection(CollectionTitle, ListBaru, this.CollectionPass);
             }else if(CollectionID == null){
-                this.CollectionID = CollectionsAccess.createCollection(this.CollectionTitle, ListBaru); 
+                this.CollectionID = DatabaseAccess.createCollection(this.CollectionTitle, ListBaru); 
             }else if(!isReadOnly()){
-                CollectionsAccess.updateCollectionTitle(CollectionID, CollectionPass, CollectionTitle);
-                CollectionsAccess.updateCollectionContents(CollectionID, CollectionPass, ListBaru);
+                DatabaseAccess.updateCollectionTitle(CollectionID, CollectionPass, CollectionTitle);
+                DatabaseAccess.updateCollectionContents(CollectionID, CollectionPass, ListBaru);
             }else{
                 System.out.println("Collection Read Only");
             }
@@ -80,14 +75,14 @@ public class Collection{
             if(this.CollectionID == null){
                 return false;
             }else if(CollectionPass != null){   
-                return !CollectionsAccess.checkCollection(CollectionID, CollectionPass);
+                return !DatabaseAccess.checkCollection(CollectionID, CollectionPass);
             }else{
                 return true;
             }		
 	}
 
         public int getViewCount() {
-            return this.CollectionsAccess.getCollectionViews(CollectionID);
+            return this.DatabaseAccess.getCollectionViews(CollectionID);
         }
         
 	public void loadPassword(String CollectionPass) {

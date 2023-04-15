@@ -1,10 +1,10 @@
 package pw.misa.kk6.AnonymousText;
 
-import pw.misa.kk6.Database.DocumentAccesable;
+import pw.misa.kk6.Database.DatabaseConnection;
 
 public class Document {
 
-	private DocumentAccesable DocumentsAccess;
+	private DatabaseConnection DatabaseAccess;
 
 	private String DocumentID;
 
@@ -14,17 +14,17 @@ public class Document {
 
 	public String DocumentText;
 
-	public Document(DocumentAccesable database) {
-            this.DocumentsAccess = database;
+	public Document(DatabaseConnection database) {
+            this.DatabaseAccess = database;
             this.DocumentID = null;
             this.DocumentPass = null;
             this.DocumentTitle = "";
             this.DocumentText = "";
 	}
 
-	public Document(DocumentAccesable database, String DocumentID) {
+	public Document(DatabaseConnection database, String DocumentID) {
             if(database.checkDocument(DocumentID)){
-                this.DocumentsAccess = database;
+                this.DatabaseAccess = database;
                 this.DocumentID = DocumentID;
                 this.DocumentPass = null;
                 this.DocumentTitle = database.getDocumentTitle(DocumentID);
@@ -34,9 +34,9 @@ public class Document {
             }
 	}
 
-	public Document(DocumentAccesable database, String DocumentID, String DocumentPass) {
+	public Document(DatabaseConnection database, String DocumentID, String DocumentPass) {
             if(database.checkDocument(DocumentID, DocumentPass)){
-                this.DocumentsAccess = database;
+                this.DatabaseAccess = database;
                 this.DocumentID = DocumentID;
                 this.DocumentPass = DocumentPass;
                 this.DocumentTitle = database.getDocumentTitle(DocumentID);
@@ -48,21 +48,21 @@ public class Document {
 
 	public void reload() {
             if (this.DocumentID != null) {
-                this.DocumentTitle = this.DocumentsAccess.getDocumentTitle(this.DocumentID);
-                this.DocumentText = this.DocumentsAccess.getDocumentText(this.DocumentID);
+                this.DocumentTitle = this.DatabaseAccess.getDocumentTitle(this.DocumentID);
+                this.DocumentText = this.DatabaseAccess.getDocumentText(this.DocumentID);
             }
 	}
 
 	public void save() {
             if (this.DocumentID == null) {
                 if (this.DocumentPass != null && !this.DocumentPass.isEmpty()) {
-                    this.DocumentID = this.DocumentsAccess.createDocument(this.DocumentTitle, this.DocumentText, this.DocumentPass);
+                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText, this.DocumentPass);
                 } else {
-                    this.DocumentID = this.DocumentsAccess.createDocument(this.DocumentTitle, this.DocumentText);
+                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText);
                 }   
             } else if (!isReadOnly()) {
-                this.DocumentsAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
-                this.DocumentsAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
+                this.DatabaseAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
+                this.DatabaseAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
             }
 	}
 
@@ -73,13 +73,13 @@ public class Document {
                 if (this.DocumentPass == null || this.DocumentPass.isEmpty()) {
                     return true;
                 } else {
-                    return !this.DocumentsAccess.checkDocument(this.DocumentID, this.DocumentPass);
+                    return !this.DatabaseAccess.checkDocument(this.DocumentID, this.DocumentPass);
                 }
             }
 	}
         
         public int getViewCount() {
-            return this.DocumentsAccess.getDocumentViews(DocumentID);
+            return this.DatabaseAccess.getDocumentViews(DocumentID);
         }
 
 	public void loadPassword(String DocumentPass) {
