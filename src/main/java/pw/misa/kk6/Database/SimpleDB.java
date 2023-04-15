@@ -53,6 +53,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         idDocContentMap.put(newID, new String(text));
         idDocPassMap.put(newID, null);
         idDocViewCountMap.put(newID, 0);
+        idDocCommentsMap.put(newID, new ArrayList<Comment>());
         return newID;
     }
 
@@ -66,6 +67,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
                 idDocContentMap.put(newID, new String(text));
                 idDocPassMap.put(newID, docPass);
                 idDocViewCountMap.put(newID, 0);
+                idDocCommentsMap.put(newID, new ArrayList<Comment>());
                 return newID;
 	}
 
@@ -147,6 +149,8 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
                 idDocTitleMap.remove(docID);
                 idDocContentMap.remove(docID);
                 idDocPassMap.remove(docID);
+                idDocViewCountMap.remove(docID);
+                idDocCommentsMap.remove(docID);
                 return true;
             }
             return false;
