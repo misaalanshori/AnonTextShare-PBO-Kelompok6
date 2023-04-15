@@ -121,11 +121,7 @@ public class TextInterface extends AppInterface {
                         break;
                     case 3:
                         if (!this.CurrentText.isReadOnly()) {
-                            System.out.print("Hapus? (y/n) ");
-                            input = masuk.nextLine();
-                            if (input.toLowerCase().equals("y")) {
-                                DatabaseConnection.deleteDocument(this.CurrentText.getDocumentID(), dPass);
-                                System.out.println("Dokumen terhapus");
+                            if (DeleteDocument()) {
                                 running = false;
                             }
                         } else {
@@ -142,7 +138,17 @@ public class TextInterface extends AppInterface {
             }
         }
         
- 
+        public boolean DeleteDocument() {
+            System.out.print("Hapus? (y/n) ");
+            String input = masuk.nextLine();
+            if (input.toLowerCase().equals("y")) {
+                this.CurrentText.delete();
+                System.out.println("Dokumen terhapus");
+                return true;
+            }
+            return false;
+        }
+        
 	public void ViewDocument() {
             System.out.println("Judul\t: " + this.CurrentText.DocumentTitle);
             System.out.println("Isi\t: " + this.CurrentText.DocumentText);
@@ -246,11 +252,7 @@ public class TextInterface extends AppInterface {
                         break;
                     case 3:
                         if (!this.CurrentCollection.isReadOnly()) {
-                            System.out.print("Hapus? (y/n) ");
-                            input = masuk.nextLine().trim();
-                            if (input.toLowerCase().equals("y")) {
-                                DatabaseConnection.deleteCollection(this.CurrentCollection.getCollectionID(), cPass);
-                                System.out.println("Collection terhapus");
+                            if (DeleteCollection()) {
                                 running = false;
                             }
                         } else {
@@ -268,6 +270,17 @@ public class TextInterface extends AppInterface {
             
 	}
 
+        public boolean DeleteCollection() {
+            System.out.print("Hapus? (y/n) ");
+            String input = masuk.nextLine().trim();
+            if (input.toLowerCase().equals("y")) {
+                this.CurrentCollection.delete();
+                System.out.println("Collection terhapus");
+                return true;
+            }
+            return false;
+        }
+        
 	public void ViewCollection() {
             System.out.println("judul : " + this.CurrentCollection.CollectionTitle);
             System.out.println("isi   : ");
