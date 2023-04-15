@@ -81,6 +81,18 @@ public class Document {
         public int getViewCount() {
             return this.DatabaseAccess.getDocumentViews(DocumentID);
         }
+        
+        public boolean delete() {
+            if (!isReadOnly()) {
+                this.DocumentsAccess.deleteDocument(DocumentID, DocumentPass);
+                this.DocumentID = null;
+                this.DocumentPass = null;
+                this.DocumentTitle = "";
+                this.DocumentText = "";
+                return true;
+            }
+            return false;
+        }
 
 	public void loadPassword(String DocumentPass) {
             this.DocumentPass = DocumentPass;
