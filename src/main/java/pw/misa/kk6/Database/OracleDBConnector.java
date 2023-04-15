@@ -1,5 +1,6 @@
 package pw.misa.kk6.Database;
 import java.util.List;
+import pw.misa.kk6.AnonymousText.Comment;
 
 public class OracleDBConnector extends DatabaseConnection implements DocumentAccesable, CollectionsAccessable {
 
@@ -80,7 +81,19 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
+        @Override
+        public boolean addDocumentComment(String docID, String name, String text) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
 
+        @Override
+        public List<Comment> getDocumentComments(String docID) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+
+        
+        
 	/**
 	 * @see Database.CollectionsAccessable#createCollection(String, )
 	 */

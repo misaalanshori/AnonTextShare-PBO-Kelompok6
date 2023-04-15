@@ -1,4 +1,6 @@
 package pw.misa.kk6.Database;
+import java.util.List;
+import pw.misa.kk6.AnonymousText.Comment;
 
 public abstract interface DocumentAccesable {
 
@@ -21,4 +23,8 @@ public abstract interface DocumentAccesable {
 	public abstract boolean deleteDocument(String docID, String docPass);
 
         public abstract int getDocumentViews(String docID);
+        
+        public abstract boolean addDocumentComment(String docID, String name, String text);
+        
+        public abstract List<Comment> getDocumentComments(String docID);
 }
