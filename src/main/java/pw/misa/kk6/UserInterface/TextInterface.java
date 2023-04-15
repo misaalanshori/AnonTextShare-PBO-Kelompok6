@@ -7,6 +7,7 @@ import pw.misa.kk6.AnonymousText.Document;
 import pw.misa.kk6.AnonymousText.Collection;
 import java.util.Scanner;
 import pw.misa.kk6.Database.DatabaseConnection;
+import pw.misa.kk6.AnonymousText.Comment;
 
 public class TextInterface extends AppInterface {
         Scanner masuk = new Scanner(System.in);
@@ -103,7 +104,9 @@ public class TextInterface extends AppInterface {
                 System.out.println("1. View Document");
                 System.out.println("2. Edit Document");
                 System.out.println("3. Delete Document");
-                System.out.println("4. Exit");
+                System.out.println("4. Add Comment");
+                System.out.println("5. View Comments");
+                System.out.println("6. Exit");
                 System.out.print("Pilihan> ");
                 int pilihan = masuk.nextInt();
                 masuk.nextLine();
@@ -129,12 +132,44 @@ public class TextInterface extends AppInterface {
                         }
                         break;
                     case 4:
+                        AddComment();
+                        break;
+                    case 5:
+                        ViewComments();
+                        break;
+                    case 6:
                         System.out.println("Kembali ke Main Menu");
                         running = false;
                         break;
                     default:
                         break;
                 }
+            }
+        }
+        
+        public void AddComment() {
+            String name;
+            String text;
+            System.out.println("New Comment:");
+            System.out.print("Input Name: ");
+            name = masuk.nextLine();
+            System.out.print("Input Text: ");
+            text = masuk.nextLine();
+            System.out.print("Post? (y/n) ");
+            String input = masuk.nextLine();
+            if (input.toLowerCase().equals("y")) {
+                this.CurrentText.addComment(name, text);
+                System.out.println("Comment Posted!");
+            } else {
+                System.out.println("Cancelled!");
+            }
+            
+        }
+        
+        public void ViewComments() {
+            System.out.println("Comments on " + this.CurrentText.DocumentTitle );
+            for (Comment komen : this.CurrentText.getComments()) {
+                System.out.println(komen.getName() + ": " + komen.getText());
             }
         }
         
