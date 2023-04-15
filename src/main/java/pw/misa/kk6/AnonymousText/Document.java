@@ -1,5 +1,5 @@
 package pw.misa.kk6.AnonymousText;
-
+import java.util.List;
 import pw.misa.kk6.Database.DatabaseConnection;
 
 public class Document {
@@ -13,11 +13,14 @@ public class Document {
 	public String DocumentTitle;
 
 	public String DocumentText;
+        
+        private List<Comment> DocumentComments;
 
 	public Document(DatabaseConnection database) {
             this.DatabaseAccess = database;
             this.DocumentID = null;
             this.DocumentPass = null;
+            this.DocumentComments = null;
             this.DocumentTitle = "";
             this.DocumentText = "";
 	}
@@ -27,8 +30,7 @@ public class Document {
                 this.DatabaseAccess = database;
                 this.DocumentID = DocumentID;
                 this.DocumentPass = null;
-                this.DocumentTitle = database.getDocumentTitle(DocumentID);
-                this.DocumentText = database.getDocumentText(DocumentID);
+                reload();
             }else {
                 System.out.println("Document not found.");
             }
@@ -39,8 +41,7 @@ public class Document {
                 this.DatabaseAccess = database;
                 this.DocumentID = DocumentID;
                 this.DocumentPass = DocumentPass;
-                this.DocumentTitle = database.getDocumentTitle(DocumentID);
-                this.DocumentText = database.getDocumentText(DocumentID);
+                reload();
             }else {
                 System.out.println("Document not found.");
             }
@@ -50,6 +51,7 @@ public class Document {
             if (this.DocumentID != null) {
                 this.DocumentTitle = this.DatabaseAccess.getDocumentTitle(this.DocumentID);
                 this.DocumentText = this.DatabaseAccess.getDocumentText(this.DocumentID);
+                this.DocumentComments = this.DatabaseAccess.getDocumentComments(DocumentID);
             }
 	}
 
@@ -77,6 +79,17 @@ public class Document {
                 }
             }
 	}
+        
+        public void addComment(String name, String text) {
+            if (this.DocumentID != null) {
+                this.DatabaseAccess.addDocumentComment(DocumentID, name, text);
+                reload();
+            }
+        }
+        
+        public List<Comment> getComments() {
+            return DocumentComments;
+        }
         
         public int getViewCount() {
             return this.DatabaseAccess.getDocumentViews(DocumentID);
