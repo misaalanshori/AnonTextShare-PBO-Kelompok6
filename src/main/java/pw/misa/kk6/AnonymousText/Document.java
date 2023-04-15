@@ -1,4 +1,4 @@
-package pw.misa.kk6.TextDocument;
+package pw.misa.kk6.AnonymousText;
 
 import pw.misa.kk6.Database.DocumentAccesable;
 

@@ -1,7 +1,6 @@
-package pw.misa.kk6.TextCollection;
+package pw.misa.kk6.AnonymousText;
 import java.util.List;
 import pw.misa.kk6.Database.CollectionsAccessable;
-import pw.misa.kk6.TextDocument.Document;
 import pw.misa.kk6.Database.DatabaseConnection;
 import pw.misa.kk6.Database.DocumentAccesable;
 import java.util.ArrayList;
