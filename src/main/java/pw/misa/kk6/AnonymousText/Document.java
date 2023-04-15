@@ -84,7 +84,7 @@ public class Document {
         
         public boolean delete() {
             if (!isReadOnly()) {
-                this.DocumentsAccess.deleteDocument(DocumentID, DocumentPass);
+                this.DatabaseAccess.deleteDocument(DocumentID, DocumentPass);
                 this.DocumentID = null;
                 this.DocumentPass = null;
                 this.DocumentTitle = "";
