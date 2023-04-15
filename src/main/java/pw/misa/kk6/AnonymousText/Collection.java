@@ -85,6 +85,18 @@ public class Collection{
             return this.DatabaseAccess.getCollectionViews(CollectionID);
         }
         
+        public boolean delete() {
+            if (!isReadOnly()) {
+                this.DatabaseAccess.deleteDocument(CollectionID, CollectionPass);
+                this.CollectionID = null;
+                this.CollectionPass = null;
+                this.CollectionTitle = "";
+                this.CollectionContents = null;
+                return true;
+            }
+            return false;
+        }
+        
 	public void loadPassword(String CollectionPass) {
              this.CollectionPass = CollectionPass; 
 	}
