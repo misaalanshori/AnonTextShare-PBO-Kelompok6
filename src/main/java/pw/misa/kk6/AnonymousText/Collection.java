@@ -46,7 +46,10 @@ public class Collection{
                     List<String> ListBaru = DatabaseAccess.getCollectionContents(CollectionID);
                     List<Document> DocumentBaru = new ArrayList();
                     for(int i = 0 ; i < ListBaru.size(); i++){
-                        DocumentBaru.add(new Document(DatabaseAccess, ListBaru.get(i)));
+                        if (this.DatabaseAccess.checkDocument(ListBaru.get(i))) {
+                            DocumentBaru.add(new Document(DatabaseAccess, ListBaru.get(i)));
+                        }
+                        
                     }
                     CollectionContents = DocumentBaru;
                 }
