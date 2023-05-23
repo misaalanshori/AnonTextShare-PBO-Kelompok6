@@ -10,7 +10,7 @@ abstract public class DatabaseConnection implements DocumentAccesable, Collectio
             System.out.println("==DEMO DOCUMENTACCESSABLE==");
             // Membuat dokumen tanpa password
             System.out.println("Membuat dokumen tanpa password");
-            String docNoPass = db.createDocument("Hello World", "Hello World is a common test program usually used by programmers to test that their software is working");
+            String docNoPass = db.createDocument("Hello World", "Hello World is a common test program usually used by programmers to test that their software is working", 1);
             System.out.println("docNoPass ID: " + docNoPass);
             
             // Cek Dokumen dan isinya
@@ -39,7 +39,7 @@ abstract public class DatabaseConnection implements DocumentAccesable, Collectio
 
             // Membuat dokumen dengan password
             System.out.println("Membuat dokumen dengan password");
-            String docWithPass = db.createDocument("A New Document", "This is a new document with a password", "goodPassword");
+            String docWithPass = db.createDocument("A New Document", "This is a new document with a password", "goodPassword", 1);
             System.out.println("docWithPass ID: " + docWithPass);
             
             // Cek Dokumen dan isinya
@@ -77,7 +77,7 @@ abstract public class DatabaseConnection implements DocumentAccesable, Collectio
             System.out.println("\n\n==DEMO COLLECTIONSACCESSSABLE==");
             
             // buat ulang docWithPass
-            docWithPass = db.createDocument("A New Document", "This is a new document with a password", "goodPassword");
+            docWithPass = db.createDocument("A New Document", "This is a new document with a password", "goodPassword", 1);
             
             List<String> listDokumen = new ArrayList<String>();
             List<String> isiCollection;
@@ -104,7 +104,7 @@ abstract public class DatabaseConnection implements DocumentAccesable, Collectio
             // Mencoba Mengupdate Collections Tanpa Password
             System.out.println("\nMencoba Mengupdate Collections Tanpa Password");
             System.out.println("colNoPass update title: " + db.updateCollectionTitle(colNoPass, null, "3 documents in here"));
-            listDokumen.add(db.createDocument("Sebuah Dokumen", "Ini adalah sebuah dokumen", "passwordBagus"));
+            listDokumen.add(db.createDocument("Sebuah Dokumen", "Ini adalah sebuah dokumen", "passwordBagus", 1));
             System.out.println("colNoPass update contents: " + db.updateCollectionContents(colNoPass, null, listDokumen));
             System.out.println("colNoPass contents: " + db.getCollectionTitle(colNoPass));
             isiCollection = db.getCollectionContents(colNoPass);
@@ -145,7 +145,7 @@ abstract public class DatabaseConnection implements DocumentAccesable, Collectio
             System.out.println("\nMencoba Mengupdate Collections");
             System.out.println("colWithPass update title null password: " + db.updateCollectionTitle(colWithPass, null, "4 documents in here"));
             System.out.println("colWithPass update title: " + db.updateCollectionTitle(colWithPass, "goodPassword", "4 documents in here"));
-            listDokumen.add(db.createDocument("Sebuah Dokumen e2", "Ini adalah sebuah dokumen", "passwordBagus"));
+            listDokumen.add(db.createDocument("Sebuah Dokumen e2", "Ini adalah sebuah dokumen", "passwordBagus", 1));
             System.out.println("colWithPass update contents: " + db.updateCollectionContents(colWithPass, "goodPassword", listDokumen));
             System.out.println("colWithPass contents: " + db.getCollectionTitle(colWithPass));
             isiCollection = db.getCollectionContents(colWithPass);

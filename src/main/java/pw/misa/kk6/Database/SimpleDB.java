@@ -8,6 +8,8 @@ import pw.misa.kk6.AnonymousText.Comment;
  * Implementasi database sederhana, menggunakan java hashmap untuk menyimpan data. Dimana key hashmap yang digunakan adalah kode id dokumen/koleksi dan valuenya adalah isi dokumen atau isi koleksinya
  */
 public class SimpleDB extends DatabaseConnection implements DocumentAccesable, CollectionsAccessable {
+    
+        private List<String> idDoc;
 
 	private HashMap<String, String> idDocPassMap;
 
@@ -16,6 +18,8 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	private HashMap<String, String> idDocContentMap;
         
         private HashMap<String, Integer> idDocViewCountMap;
+        
+        private HashMap<String, Integer> idDocVisibilityMap; // 0 = Unlisted, 1 = Public
 
         private HashMap<String, List<Comment>> idDocCommentsMap;
         
@@ -36,23 +40,27 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         
         
 	public SimpleDB() {
+                this.idDoc = new ArrayList<>();
                 this.idDocPassMap = new HashMap<>();
                 this.idDocTitleMap = new HashMap<>();
                 this.idDocContentMap = new HashMap<>();
                 this.idDocViewCountMap = new HashMap<>();
                 this.idDocCommentsMap = new HashMap<>();
+                this.idDocVisibilityMap = new HashMap<>();
                 this.idColPassMap = new HashMap<>();
                 this.idColTitleMap = new HashMap<>();
                 this.idColContentMap = new HashMap<>();
                 this.idColViewCountMap = new HashMap<>();
 	}
 
-    public String createDocument(String title, String text) {
+    public String createDocument(String title, String text, int visibility) {
         String newID = genID();
+        idDoc.add(newID);
         idDocTitleMap.put(newID, new String(title));
         idDocContentMap.put(newID, new String(text));
         idDocPassMap.put(newID, null);
         idDocViewCountMap.put(newID, 0);
+        idDocVisibilityMap.put(newID, visibility);
         idDocCommentsMap.put(newID, new ArrayList<Comment>());
         return newID;
     }
@@ -61,12 +69,14 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	/**
 	 * @see Database.DocumentAccesable#createDocument(String, String, String)
 	 */
-	public String createDocument(String title, String text, String docPass) {
+	public String createDocument(String title, String text, String docPass, int visibility) {
 		String newID = genID();
+                idDoc.add(newID);
                 idDocTitleMap.put(newID, new String(title));
                 idDocContentMap.put(newID, new String(text));
                 idDocPassMap.put(newID, docPass);
                 idDocViewCountMap.put(newID, 0);
+                idDocVisibilityMap.put(newID, visibility);
                 idDocCommentsMap.put(newID, new ArrayList<Comment>());
                 return newID;
 	}
@@ -76,7 +86,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	 * @see Database.DocumentAccesable#checkDocument(String)
 	 */
 	public boolean checkDocument(String docID) {
-		return idDocTitleMap.containsKey(docID);
+		return idDoc.contains(docID);
 	}
 
 
@@ -84,7 +94,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
 	 * @see Database.DocumentAccesable#checkDocument(String, String)
 	 */
 	public boolean checkDocument(String docID, String docPass) {
-		if (idDocPassMap.containsKey(docID)) {
+		if (idDoc.contains(docID)) {
                     if (idDocPassMap.get(docID) == null) {
                         return false;
                     } else if (idDocPassMap.get(docID).equals(docPass)) {
@@ -115,7 +125,13 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
                 }
 		return idDocContentMap.get(docID);
 	}
-
+        
+        public int getDocumentVisibility(String docID) {
+            if (checkDocument(docID)) {
+                return idDocVisibilityMap.get(docID);
+            }
+            return -1;
+        }
 
 	/**
 	 * @see Database.DocumentAccesable#updateDocumentTitle(String, String, String)
@@ -140,6 +156,13 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             return false;
 	}
 
+        public boolean updateDocumentVisibility(String docID, String docPass, int visibility) {
+            if (checkDocument(docID, docPass)) {
+                idDocVisibilityMap.replace(docID, visibility);
+                return true;
+            }
+            return false;
+	}
 
 	/**
 	 * @see Database.DocumentAccesable#deleteDocument(String, String)
@@ -181,6 +204,17 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
             }
             return null;
             
+        }
+
+        @Override
+        public List<String> getLatestDocuments(int num) {
+            List<String> latestDocs = new ArrayList<>();
+            for (int i = idDoc.size() - 1; i > 0 && latestDocs.size() != num; i--) {
+                if (getDocumentVisibility(idDoc.get(i)) == 1) {
+                    latestDocs.add(idDoc.get(i));
+                }
+            }
+            return latestDocs;
         }
 
         

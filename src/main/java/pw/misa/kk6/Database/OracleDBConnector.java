@@ -8,7 +8,7 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
 	/**
 	 * @see Database.DocumentAccesable#createDocument(String, String)
 	 */
-	public String createDocument(String title, String text) {
+	public String createDocument(String title, String text, int visibility) {
 		return null;
 	}
 
@@ -16,7 +16,7 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
 	/**
 	 * @see Database.DocumentAccesable#createDocument(String, String, String)
 	 */
-	public String createDocument(String title, String text, String docPass) {
+	public String createDocument(String title, String text, String docPass, int visibility) {
 		return null;
 	}
 
@@ -170,8 +170,23 @@ public class OracleDBConnector extends DatabaseConnection implements DocumentAcc
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
+        @Override
+        public List<String> getLatestDocuments(int num) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public int getDocumentVisibility(String docID) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public boolean updateDocumentVisibility(String docID, String docPass, int visibility) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
 
 
+        
 
 
 }
