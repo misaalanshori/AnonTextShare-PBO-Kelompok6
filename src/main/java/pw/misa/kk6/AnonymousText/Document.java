@@ -69,6 +69,7 @@ public class Document {
             } else if (!isReadOnly()) {
                 this.DatabaseAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
                 this.DatabaseAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
+                this.DatabaseAccess.updateDocumentVisibility(this.DocumentID, this.DocumentPass, this.visibility);
             }
 	}
 
@@ -118,6 +119,10 @@ public class Document {
 
         public void setVisibility(int visibility) {
             this.visibility = visibility;
+        }
+
+        public int getVisibility() {
+            return this.visibility;
         }
 
 	public String getDocumentID() {
