@@ -4,23 +4,17 @@ import java.util.List;
 import pw.misa.kk6.Database.DatabaseConnection;
 public class LatestDocuments {
     private List<Document> latesDocuments;
+    private DatabaseConnection database;
+    public LatestDocuments(DatabaseConnection database){
+        this.database = database;
+    }
     public void reload(){
-        DatabaseConnection Con = null; 
-        List<String> docString = Con.getLatestDocuments(0);
-        
-        int lastIndex = docString.size() - 1; // Mendapatkan indeks terakhir
-
+        List<String> docString = database.getLatestDocuments(10);
         latesDocuments = new ArrayList<>();
-        
-        if (lastIndex >= 0) {
-            String latestDocumentString = docString.get(lastIndex);
-            Document document = new Document(Con);
+        for (String documentString : docString) {
+            Document document = new Document(database, documentString);
             latesDocuments.add(document);
         }
-        //for (String documentString : docString) {
-        //    Document document = new Document(Con);
-        //    latesDocuments.add(document);
-        //}
         
     }
     
