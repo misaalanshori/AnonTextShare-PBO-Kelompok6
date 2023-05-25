@@ -14,6 +14,8 @@ public class Document {
 
 	public String DocumentText;
         
+        private int visibility;
+        
         private List<Comment> DocumentComments;
 
 	public Document(DatabaseConnection database) {
@@ -23,6 +25,7 @@ public class Document {
             this.DocumentComments = null;
             this.DocumentTitle = "";
             this.DocumentText = "";
+            this.visibility = 1;
 	}
 
 	public Document(DatabaseConnection database, String DocumentID) {
@@ -52,19 +55,21 @@ public class Document {
                 this.DocumentTitle = this.DatabaseAccess.getDocumentTitle(this.DocumentID);
                 this.DocumentText = this.DatabaseAccess.getDocumentText(this.DocumentID);
                 this.DocumentComments = this.DatabaseAccess.getDocumentComments(DocumentID);
+                this.visibility = this.DatabaseAccess.getDocumentVisibility(DocumentID);
             }
 	}
 
 	public void save() {
             if (this.DocumentID == null) {
                 if (this.DocumentPass != null && !this.DocumentPass.isEmpty()) {
-                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText, this.DocumentPass);
+                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText, this.DocumentPass, this.visibility);
                 } else {
-                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText);
+                    this.DocumentID = this.DatabaseAccess.createDocument(this.DocumentTitle, this.DocumentText, this.visibility);
                 }   
             } else if (!isReadOnly()) {
                 this.DatabaseAccess.updateDocumentTitle(this.DocumentID, this.DocumentPass, this.DocumentTitle);
                 this.DatabaseAccess.updateDocumentText(this.DocumentID, this.DocumentPass, this.DocumentText);
+                this.DatabaseAccess.updateDocumentVisibility(this.DocumentID, this.DocumentPass, this.visibility);
             }
 	}
 
@@ -102,6 +107,7 @@ public class Document {
                 this.DocumentPass = null;
                 this.DocumentTitle = "";
                 this.DocumentText = "";
+                this.visibility = 0;
                 return true;
             }
             return false;
@@ -110,6 +116,14 @@ public class Document {
 	public void loadPassword(String DocumentPass) {
             this.DocumentPass = DocumentPass;
 	}
+
+        public void setVisibility(int visibility) {
+            this.visibility = visibility;
+        }
+
+        public int getVisibility() {
+            return this.visibility;
+        }
 
 	public String getDocumentID() {
             return this.DocumentID;
