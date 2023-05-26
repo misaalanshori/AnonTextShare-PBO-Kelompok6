@@ -1,10 +1,9 @@
 package pw.misa.kk6.UserInterface;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import pw.misa.kk6.AnonymousText.Document;
 import pw.misa.kk6.AnonymousText.Collection;
+import pw.misa.kk6.AnonymousText.LatestDocuments;
 import java.util.Scanner;
 import pw.misa.kk6.Database.DatabaseConnection;
 import pw.misa.kk6.AnonymousText.Comment;
@@ -16,6 +15,7 @@ public class TextInterface extends AppInterface {
         super(DatabaseConnection);
     }
 	public void startUI() {
+            this.LatestDocument = new LatestDocuments(DatabaseConnection);
             this.showMainMenu();
 	}
 
@@ -30,7 +30,8 @@ public class TextInterface extends AppInterface {
                 System.out.println("2. Load Document           ");
                 System.out.println("3. Create Collection       ");
                 System.out.println("4. Load Collection         ");
-                System.out.println("5. Exit                    ");
+                System.out.println("5. Latest Documents        ");
+                System.out.println("6. Exit                    ");
                 System.out.print("Pilihan> ");
                 int input = masuk.nextInt();
                 masuk.nextLine();
@@ -47,7 +48,10 @@ public class TextInterface extends AppInterface {
                     case 4:
                         this.LoadCollection();
                         break;
-                    case 5:
+                     case 5:
+                        this.LatestDocument();
+                        break;
+                    case 6:
                         System.out.println("Selesai");
                         running = false;
                         break;
@@ -67,6 +71,23 @@ public class TextInterface extends AppInterface {
             System.out.print("Masukan teks: ");
             String input1 = masuk.nextLine();
             this.CurrentText.DocumentText = input1;
+            
+            System.out.print("Masukan visibilitas (0: Unlisted, 1: Public): ");
+            int input3 = Integer.parseInt(masuk.nextLine().trim());
+            switch (input3) {
+                case 0:
+                    this.CurrentText.setVisibility(input3);
+                    System.out.println("Visibilitas: Unlisted");
+                    break;
+                case 1:
+                    this.CurrentText.setVisibility(input3);
+                    System.out.println("Visibilitas: Public");
+                    break;
+                default:
+                    this.CurrentText.setVisibility(1);
+                    System.out.println("Visibilitas default (Public) dipilih");
+                    break;
+            }
             
             
             System.out.print("Masukan password: ");
@@ -187,6 +208,13 @@ public class TextInterface extends AppInterface {
 	public void ViewDocument() {
             System.out.println("Judul\t: " + this.CurrentText.DocumentTitle);
             System.out.println("Isi\t: " + this.CurrentText.DocumentText);
+            System.out.print("Visibility: ");
+            if( this.CurrentText.getVisibility() == 0){
+                System.out.println("Unlisted\t");
+            } else if (this.CurrentText.getVisibility() == 1) {
+                System.out.println("Public\t");
+            }
+            
 	}
 
 	public void EditDocument() {
@@ -204,6 +232,27 @@ public class TextInterface extends AppInterface {
                 System.out.print("Isi baru: ");
                 String isi = masuk.nextLine();
                 this.CurrentText.DocumentText = isi;
+            }
+            
+            System.out.print("apakah anda ingin mengganti visibilitas? (y/n) ");
+            input = masuk.nextLine();
+            if(input.toLowerCase().equals("y")){
+                System.out.print("Visibilitas Baru (0: Unlisted, 1: Public): ");
+                int input3 = Integer.parseInt(masuk.nextLine().trim());
+                switch (input3) {
+                    case 0:
+                        this.CurrentText.setVisibility(input3);
+                        System.out.println("Visibilitas: Unlisted");
+                        break;
+                    case 1:
+                        this.CurrentText.setVisibility(input3);
+                        System.out.println("Visibilitas: Public");
+                        break;
+                    default:
+                        this.CurrentText.setVisibility(1);
+                        System.out.println("Visibilitas default (Public) dipilih");
+                        break;
+            }
             }
             
             System.out.print("apakah anda ingin menyimpan dokumen? (y/n) ");
@@ -379,5 +428,12 @@ public class TextInterface extends AppInterface {
                 }
             }
 	}
+        public void LatestDocument(){
+            System.out.println("Menampilkan dokumen terbaru");
+            this.LatestDocument.reload();
+            for (Document list : this.LatestDocument.getList()) {
+                System.out.printf("%s: %s\n", list.getDocumentID(), list.DocumentTitle);
+            }
+        }
 
 }
