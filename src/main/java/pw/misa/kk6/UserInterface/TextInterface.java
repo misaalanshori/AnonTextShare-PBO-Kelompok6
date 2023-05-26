@@ -48,7 +48,10 @@ public class TextInterface extends AppInterface {
                     case 4:
                         this.LoadCollection();
                         break;
-                    case 5:
+                     case 5:
+                        this.LatestDocument();
+                        break;
+                    case 6:
                         System.out.println("Selesai");
                         running = false;
                         break;
@@ -143,9 +146,6 @@ public class TextInterface extends AppInterface {
                         ViewComments();
                         break;
                     case 6:
-                        LatestDocument();
-                        break;
-                    case 7:
                         System.out.println("Kembali ke Main Menu");
                         running = false;
                         break;
@@ -195,7 +195,10 @@ public class TextInterface extends AppInterface {
 	public void ViewDocument() {
             System.out.println("Judul\t: " + this.CurrentText.DocumentTitle);
             System.out.println("Isi\t: " + this.CurrentText.DocumentText);
-            System.out.println("Visibility\t: " + this.CurrentText.getVisibility());
+            if( this.CurrentText.getVisibility() == 0){
+                System.out.println("0: unlisted\t");
+            }
+            System.out.println("1: Public\t");
 	}
 
 	public void EditDocument() {
@@ -391,7 +394,9 @@ public class TextInterface extends AppInterface {
         public void LatestDocument(){
             System.out.println("Menampilkan dokumen terbaru");
             this.LatestDocument.reload();
-            System.out.print(this.LatestDocument.getList());
+            for (Document list : this.LatestDocument.getList()) {
+                System.out.print(this.LatestDocument.getList());
+            }
         }
 
 }
