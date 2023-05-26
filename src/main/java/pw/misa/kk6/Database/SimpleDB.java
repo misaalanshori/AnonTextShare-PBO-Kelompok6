@@ -209,7 +209,7 @@ public class SimpleDB extends DatabaseConnection implements DocumentAccesable, C
         @Override
         public List<String> getLatestDocuments(int num) {
             List<String> latestDocs = new ArrayList<>();
-            for (int i = idDoc.size() - 1; i > 0 && latestDocs.size() != num; i--) {
+            for (int i = idDoc.size() - 1; i >= 0 && latestDocs.size() != num; i--) {
                 if (getDocumentVisibility(idDoc.get(i)) == 1) {
                     latestDocs.add(idDoc.get(i));
                 }
