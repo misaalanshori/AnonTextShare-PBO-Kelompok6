@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import pw.misa.kk6.AnonymousText.Document;
 import pw.misa.kk6.AnonymousText.Collection;
+import pw.misa.kk6.AnonymousText.LatestDocuments;
 import java.util.Scanner;
 import pw.misa.kk6.Database.DatabaseConnection;
 import pw.misa.kk6.AnonymousText.Comment;
@@ -74,6 +75,9 @@ public class TextInterface extends AppInterface {
             if(dPass != null && !dPass.isEmpty()){
                 this.CurrentText.loadPassword(dPass);
             }
+            System.out.print("Masukan angka visibility 1(pulic)/ 0(unlisted)");
+            int input2 = masuk.nextInt();
+            this.CurrentText.setVisibility(input2);
             this.CurrentText.save();
             System.out.println("New document code : " + this.CurrentText.getDocumentID());
             
@@ -106,7 +110,8 @@ public class TextInterface extends AppInterface {
                 System.out.println("3. Delete Document");
                 System.out.println("4. Add Comment");
                 System.out.println("5. View Comments");
-                System.out.println("6. Exit");
+                System.out.println("6. Latest Document");
+                System.out.println("7. Exit");
                 System.out.print("Pilihan> ");
                 int pilihan = masuk.nextInt();
                 masuk.nextLine();
@@ -138,6 +143,9 @@ public class TextInterface extends AppInterface {
                         ViewComments();
                         break;
                     case 6:
+                        LatestDocument();
+                        break;
+                    case 7:
                         System.out.println("Kembali ke Main Menu");
                         running = false;
                         break;
@@ -187,6 +195,7 @@ public class TextInterface extends AppInterface {
 	public void ViewDocument() {
             System.out.println("Judul\t: " + this.CurrentText.DocumentTitle);
             System.out.println("Isi\t: " + this.CurrentText.DocumentText);
+            System.out.println("Visibility\t: " + this.CurrentText.getVisibility());
 	}
 
 	public void EditDocument() {
@@ -379,5 +388,10 @@ public class TextInterface extends AppInterface {
                 }
             }
 	}
+        public void LatestDocument(){
+            System.out.println("Menampilkan dokumen terbaru");
+            this.LatestDocument.reload();
+            System.out.print(this.LatestDocument.getList());
+        }
 
 }
