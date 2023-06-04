@@ -24,13 +24,19 @@ public class TextDocument {
     public String getName() {
         return name;
     }
+    public void setName(final String name){
+        this.name = name;
+    }
 
     public String getText() {
         return text;
     }
+    public void setText(final String text){
+        this.text = text;
+    }
     
     } 
-    private DatabaseConnection DatabaseAccess;
+        private DatabaseConnection Access;
 
 	private String ID;
 
@@ -44,8 +50,8 @@ public class TextDocument {
         
         private List<pw.misa.kk6.AnonymousText.Comment> DocumentComments;
 
-	public TextDocument(DatabaseConnection database) {
-            this.DatabaseAccess = database;
+	public TextDocument(final DatabaseConnection database) {
+            this.Access = database;
             this.ID = null;
             this.Pass = null;
             this.DocumentComments = null;
@@ -54,9 +60,9 @@ public class TextDocument {
             this.visibility = 1;
 	}
 
-	public TextDocument(DatabaseConnection database, String DocumentID) {
+	public TextDocument(final DatabaseConnection database, final String DocumentID) {
             if(database.checkDocument(DocumentID)){
-                this.DatabaseAccess = database;
+                this.Access = database;
                 this.ID = DocumentID;
                 this.Pass = null;
                 reload();
@@ -65,9 +71,9 @@ public class TextDocument {
             }
 	}
 
-	public TextDocument(DatabaseConnection database, String DocumentID, String DocumentPass) {
+	public TextDocument(final DatabaseConnection database, final String DocumentID, final String DocumentPass) {
             if(database.checkDocument(DocumentID, DocumentPass)){
-                this.DatabaseAccess = database;
+                this.Access = database;
                 this.ID = DocumentID;
                 this.Pass = DocumentPass;
                 reload();
@@ -78,80 +84,58 @@ public class TextDocument {
 
 	public void reload() {
             if (this.ID != null) {
-                this.Title = this.DatabaseAccess.getDocumentTitle(this.ID);
-                this.Text = this.DatabaseAccess.getDocumentText(this.ID);
-                this.DocumentComments = this.DatabaseAccess.getDocumentComments(ID);
-                this.visibility = this.DatabaseAccess.getDocumentVisibility(ID);
+                this.Title = this.Access.getDocumentTitle(this.ID);
+                this.Text = this.Access.getDocumentText(this.ID);
+                this.DocumentComments = this.Access.getDocumentComments(ID);
+                this.visibility = this.Access.getDocumentVisibility(ID);
             }
 	}
-
-	public void save() {
-            if (this.ID == null) {
-                if (this.Pass != null && !this.Pass.isEmpty()) {
-                    this.ID = this.DatabaseAccess.createDocument(this.Title, this.Text, this.Pass, this.visibility);
-                } else {
-                    this.ID = this.DatabaseAccess.createDocument(this.Title, this.Text, this.visibility);
-                }   
-            } else if (!isReadOnly()) {
-                this.DatabaseAccess.updateDocumentTitle(this.ID, this.Pass, this.Title);
-                this.DatabaseAccess.updateDocumentText(this.ID, this.Pass, this.Text);
-                this.DatabaseAccess.updateDocumentVisibility(this.ID, this.Pass, this.visibility);
-            }
-	}
-
-	public boolean isReadOnly() {
-            if (this.ID == null) {
-                return false;
-            } else {
-                if (this.Pass == null || this.Pass.isEmpty()) {
-                    return true;
-                } else {
-                    return !this.DatabaseAccess.checkDocument(this.ID, this.Pass);
-                }
-            }
-	}
-        
-        public void addComment(String name, String text) {
-            if (this.ID != null) {
-                this.DatabaseAccess.addDocumentComment(ID, name, text);
-                reload();
-            }
+        public DatabaseConnection getAcces(){
+            return Access;
+        }
+        public void setAcces(final DatabaseConnection Access){
+            this.Access = Access;
         }
         
-        public List<pw.misa.kk6.AnonymousText.Comment> getComments() {
-            return DocumentComments;
+        public String getText(){
+            return Text;
+        }
+        public void setText(final String Text){
+            this.Text = Text;
+        }
+        public String getTite(){
+            return Title;
+        }
+        public void setTitle(final String Title){
+            this.Title = Title;
         }
         
-        public int getViewCount() {
-            return this.DatabaseAccess.getDocumentViews(ID);
-        }
-        
-        public boolean delete() {
-            if (!isReadOnly()) {
-                this.DatabaseAccess.deleteDocument(ID, Pass);
-                this.ID = null;
-                this.Pass = null;
-                this.Title = "";
-                this.Text = "";
-                this.visibility = 0;
-                return true;
-            }
-            return false;
-        }
-
-	public void loadPassword(String DocumentPass) {
-            this.Pass = DocumentPass;
-	}
-
-        public void setVisibility(int visibility) {
+        public void setVisibility(final int visibility) {
             this.visibility = visibility;
         }
-
         public int getVisibility() {
             return this.visibility;
         }
-
+        
 	public String getDocumentID() {
             return this.ID;
 	}
+        public void SetID(final String ID){
+            this.ID = ID;
+        }
+        
+        public String getPass(){
+            return Pass;
+        }
+        public void SetPass(final String Pass){
+            this.Pass = Pass;
+        }
+        
+        public List<pw.misa.kk6.AnonymousText.Comment> getList(){
+            return DocumentComments;
+        } 
+        public void setList(final List<pw.misa.kk6.AnonymousText.Comment> Comments){
+            this.DocumentComments = Comments;
+        }
+        
 }
