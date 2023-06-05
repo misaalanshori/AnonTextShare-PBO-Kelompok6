@@ -40,11 +40,13 @@ public class TextDocument {
 
     private String Pass;
 
-    public String Title;
+    private String Title;
 
-    public String Text;
+    private String Text;
 
     private int visibility;
+    
+    private int viewCount;
 
     private List<Comment> comments;
 
@@ -96,7 +98,15 @@ public class TextDocument {
         this.comments = comments;
     }
 
+    public int getViewCount() {
+        return viewCount;
+    }
 
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
 
+    
+    
         
 }
