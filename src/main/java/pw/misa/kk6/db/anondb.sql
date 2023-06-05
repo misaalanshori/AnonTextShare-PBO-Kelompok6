@@ -8,6 +8,7 @@ DROP FUNCTION check_document_password;
 DROP PROCEDURE update_document;
 DROP PROCEDURE delete_document;
 DROP PROCEDURE increment_view_count;
+DROP PROCEDURE insert_document_comment;
 
 -- Dropping the views
 DROP VIEW latest_documents_view;
@@ -86,19 +87,19 @@ FROM document;
 
 CREATE OR REPLACE PROCEDURE create_document
 (
-    id OUT document.id%TYPE,
-    password IN VARCHAR2,
-    title IN document.title%TYPE,
-    text IN document.text%TYPE,
-    visibility IN document.visibility%TYPE
+    p_id OUT document.id%TYPE,
+    p_password IN VARCHAR2,
+    p_title IN document.title%TYPE,
+    p_text IN document.text%TYPE,
+    p_visibility IN document.visibility%TYPE
 ) IS
     hashed_password VARCHAR2(64);
 BEGIN
-    id := SYS_GUID();
-    hashed_password := LOWER(RAWTOHEX(DBMS_CRYPTO.HASH(UTL_I18N.STRING_TO_RAW(password, 'AL32UTF8'), DBMS_CRYPTO.HASH_SH1)));
+    p_id := SYS_GUID();
+    hashed_password := LOWER(RAWTOHEX(DBMS_CRYPTO.HASH(UTL_I18N.STRING_TO_RAW(p_password, 'AL32UTF8'), DBMS_CRYPTO.HASH_SH1)));
     -- Insert data into the document table
     INSERT INTO document (id, password_hash, title, text, visibility, time_created)
-    VALUES (id, hashed_password, title, text, visibility, CURRENT_TIMESTAMP);
+    VALUES (p_id, hashed_password, p_title, p_text, p_visibility, CURRENT_TIMESTAMP);
     -- Commit the transaction
     COMMIT;
 END create_document;
@@ -106,16 +107,16 @@ END create_document;
 
 CREATE OR REPLACE PROCEDURE create_document_nopass
 (
-    id OUT document.id%TYPE,
-    title IN document.title%TYPE,
-    text IN document.text%TYPE,
-    visibility IN document.visibility%TYPE
+    p_id OUT document.id%TYPE,
+    p_title IN document.title%TYPE,
+    p_text IN document.text%TYPE,
+    p_visibility IN document.visibility%TYPE
 ) IS
 BEGIN
-    id := SYS_GUID();
+    p_id := SYS_GUID();
     -- Insert data into the document table
     INSERT INTO document (id, password_hash, title, text, visibility, time_created)
-    VALUES (id, null, title, text, visibility, CURRENT_TIMESTAMP);
+    VALUES (p_id, null, p_title, p_text, p_visibility, CURRENT_TIMESTAMP);
     -- Commit the transaction
     COMMIT;
 END create_document_nopass;
@@ -153,22 +154,22 @@ END check_document_password;
 
 CREATE OR REPLACE PROCEDURE update_document
 (
-    id IN document.id%TYPE,
-    password IN VARCHAR2,
-    title IN document.title%TYPE,
-    text IN document.text%TYPE,
-    visibility IN document.visibility%TYPE
+    p_id IN document.id%TYPE,
+    p_password IN VARCHAR2,
+    p_title IN document.title%TYPE,
+    p_text IN document.text%TYPE,
+    p_visibility IN document.visibility%TYPE
 ) IS
     v_password_hash VARCHAR2(64);
 BEGIN
     -- Check the password
-    IF check_document_password(id, password) THEN
+    IF check_document_password(p_id, p_password) THEN
         -- Update the document table
         UPDATE document SET
-            title = title,
-            text = text,
-            visibility = visibility
-        WHERE id = id;
+            title = p_title,
+            text = p_text,
+            visibility = p_visibility
+        WHERE id = p_id;
     ELSE
         RAISE_APPLICATION_ERROR(-21001, 'Incorrect Document password');
     END IF;
@@ -184,12 +185,12 @@ END update_document;
 CREATE OR REPLACE PROCEDURE delete_document
 (
     p_id IN document.id%TYPE,
-    password IN VARCHAR2
+    p_password IN VARCHAR2
 ) IS
     valid_password BOOLEAN;
 BEGIN
     -- Check if the provided password matches the password_hash for the given id
-    valid_password := check_document_password(p_id, password);
+    valid_password := check_document_password(p_id, p_password);
 
     IF valid_password THEN
         -- Delete the document if the password is valid
@@ -219,4 +220,16 @@ EXCEPTION
     WHEN OTHERS THEN
         RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
 END increment_view_count;
+/
+
+CREATE OR REPLACE PROCEDURE insert_document_comment
+(
+    p_document_id IN document.id%TYPE,
+    p_name in document_comment.name%TYPE,
+    p_text in document_comment.text%TYPE
+) IS
+BEGIN 
+    INSERT INTO document_comment (document_id, name, text, time_created)
+    values (p_document_id, p_name, p_text, CURRENT_TIMESTAMP);
+END insert_document_comment;
 /
