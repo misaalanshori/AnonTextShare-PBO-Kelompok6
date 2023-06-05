@@ -12,8 +12,8 @@ import pw.misa.kk6.models.TextDocument;
  * @author Isabu
  */
 public class TextCollectionDao {
-    public void insert(TextCollection collection) {
-    
+    public String insert(TextCollection collection) {
+        return null;
     }
     
     // Method untuk mengupdate attribut collection

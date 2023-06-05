@@ -12,8 +12,8 @@ import pw.misa.kk6.models.TextDocument;
  * @author Isabu
  */
 public class TextDocumentDao {
-    public void insert(TextDocument document) {
-    
+    public String insert(TextDocument document) {
+        return null;
     }
     
     public void update(TextDocument document) {
