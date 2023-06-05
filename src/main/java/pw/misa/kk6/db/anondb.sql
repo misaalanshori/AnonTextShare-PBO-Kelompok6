@@ -19,6 +19,7 @@ GRANT CREATE SESSION TO public_user;
 create table document (
     id VARCHAR2(64),
     password_hash VARCHAR2(64),
+    view_count NUMBER(20),
     title VARCHAR2(256),
     text VARCHAR2(3120),
     visibility NUMBER(1),
