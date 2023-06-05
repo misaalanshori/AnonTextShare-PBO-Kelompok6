@@ -4,59 +4,71 @@
  */
 package pw.misa.kk6.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import pw.misa.kk6.AnonymousText.Document;
-import pw.misa.kk6.Database.DatabaseConnection;
 
 /**
  *
  * @author Isabu
  */
 public class TextCollection {
-        private DatabaseConnection Access;
-
 	private String ID;
 
 	private String Pass;
 
-	public String Title;
+	private String Title;
 
-	public List<Document> Contents;
-        
-        public DatabaseConnection getAcces(){
-            return Access;
-        }
-        public void setAcces(final DatabaseConnection Access){
-            this.Access = Access;
+	private List<Document> Contents;
+
+        public TextCollection() {
         }
 
-	public String getCollectionID() {
-            return ID;
-	}
-        
-        public void SetID(final String ID){
+        public TextCollection(String ID, String Pass, String Title, List<Document> Contents) {
             this.ID = ID;
-        }
-        
-        public String getPass(){
-            return Pass;
-        }
-        
-        public void SetPass(final String Pass){
             this.Pass = Pass;
-        }
-        public String getTittle(){
-            return Title;
-        }
-        public void setTitle(final String Title){
             this.Title = Title;
-        }
-        public List<Document> getList(){
-            return Contents;
-        } 
-        
-        public void setList(final List<Document> Contents){
             this.Contents = Contents;
         }
+        
+        public TextCollection(String ID, String Title, List<Document> Contents) {
+            this.ID = ID;
+            this.Title = Title;
+            this.Contents = Contents;
+        }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getPass() {
+        return Pass;
+    }
+
+    public void setPass(String Pass) {
+        this.Pass = Pass;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
+
+    public List<Document> getContents() {
+        return Contents;
+    }
+
+    public void setContents(List<Document> Contents) {
+        this.Contents = Contents;
+    }
+
+        
+        
+	
 }
