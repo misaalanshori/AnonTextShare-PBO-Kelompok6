@@ -25,10 +25,12 @@ DROP TABLE collection_document;
 DROP TABLE document;
 DROP TABLE collection;
 
-
+-- Creating the Public User
 CREATE USER public_user IDENTIFIED BY helloanonymous;
 GRANT CREATE SESSION TO public_user;
 
+
+-- Creating the Table
 create table document (
     id VARCHAR2(64),
     password_hash VARCHAR2(64),
@@ -71,6 +73,7 @@ ALTER TABLE collection_document ADD CONSTRAINT fk_col_doc_collection_id FOREIGN 
 ALTER TABLE collection_document ADD CONSTRAINT fk_col_doc_document_id FOREIGN KEY (document_id) REFERENCES document(id) ON DELETE CASCADE;
 
 
+-- Creating Views
 CREATE OR REPLACE VIEW latest_documents_view AS
 SELECT *
 FROM (
@@ -85,6 +88,8 @@ CREATE VIEW documents_view AS
 SELECT id, view_count, title, text, visibility, time_created
 FROM document;
 
+
+-- Creating Access Procedures
 CREATE OR REPLACE PROCEDURE create_document
 (
     p_id OUT document.id%TYPE,
@@ -177,8 +182,8 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
         RAISE_APPLICATION_ERROR(-21002, 'Document not found');
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--    WHEN OTHERS THEN
+--        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
 END update_document;
 /
 
@@ -198,9 +203,9 @@ BEGIN
     ELSE
         RAISE_APPLICATION_ERROR(-21001, 'Incorrect Document password');
     END IF;
-EXCEPTION
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--EXCEPTION
+--    WHEN OTHERS THEN
+--        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
 END delete_document;
 /
 
@@ -217,8 +222,8 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
         RAISE_APPLICATION_ERROR(-21002, 'Document not found');
-    WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--    WHEN OTHERS THEN
+--        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
 END increment_view_count;
 /
 
@@ -233,3 +238,17 @@ BEGIN
     values (p_document_id, p_name, p_text, CURRENT_TIMESTAMP);
 END insert_document_comment;
 /
+
+
+-- Granting privileges
+GRANT EXECUTE ON create_document TO public_user;
+GRANT EXECUTE ON create_document_nopass TO public_user;
+GRANT EXECUTE ON check_document_password TO public_user;
+GRANT EXECUTE ON update_document TO public_user;
+GRANT EXECUTE ON delete_document TO public_user;
+GRANT EXECUTE ON increment_view_count TO public_user;
+GRANT EXECUTE ON insert_document_comment TO public_user;
+
+GRANT SELECT ON latest_documents_view TO public_user;
+GRANT SELECT ON documents_view TO public_user;
+GRANT SELECT ON document_comment TO public_user;
