@@ -3,6 +3,7 @@ DROP USER public_user CASCADE;
 
 -- Dropping the views
 DROP VIEW latest_documents_view;
+DROP VIEW documents_view;
 
 -- Removing foreign keys from tables
 ALTER TABLE document_comment DROP CONSTRAINT fk_comment_document_id;
@@ -71,3 +72,6 @@ FROM (
 )
 WHERE ROWNUM <= 10;
 
+CREATE VIEW documents_view AS
+SELECT id, view_count, title, text, visibility, time_created
+FROM document;
