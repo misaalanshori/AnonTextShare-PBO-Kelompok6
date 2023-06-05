@@ -1,6 +1,9 @@
 -- Dropping the public user
 DROP USER public_user CASCADE;
 
+-- Dropping the views
+DROP VIEW latest_documents_view;
+
 -- Removing foreign keys from tables
 ALTER TABLE document_comment DROP CONSTRAINT fk_comment_document_id;
 ALTER TABLE collection_document DROP CONSTRAINT fk_col_doc_collection_id;
@@ -57,4 +60,14 @@ ALTER TABLE document_comment ADD CONSTRAINT fk_comment_document_id FOREIGN KEY (
 ALTER TABLE collection_document ADD CONSTRAINT fk_col_doc_collection_id FOREIGN KEY (collection_id) REFERENCES collection(id) ON DELETE CASCADE;
 ALTER TABLE collection_document ADD CONSTRAINT fk_col_doc_document_id FOREIGN KEY (document_id) REFERENCES document(id) ON DELETE CASCADE;
 
+
+CREATE OR REPLACE VIEW latest_documents_view AS
+SELECT *
+FROM (
+    SELECT id, view_count, title
+    FROM document
+    WHERE visibility = 1
+    ORDER BY time_created DESC
+)
+WHERE ROWNUM <= 10;
 
