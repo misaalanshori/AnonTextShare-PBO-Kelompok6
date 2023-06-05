@@ -103,8 +103,8 @@ BEGIN
     p_id := SYS_GUID();
     hashed_password := LOWER(RAWTOHEX(DBMS_CRYPTO.HASH(UTL_I18N.STRING_TO_RAW(p_password, 'AL32UTF8'), DBMS_CRYPTO.HASH_SH1)));
     -- Insert data into the document table
-    INSERT INTO document (id, password_hash, title, text, visibility, time_created)
-    VALUES (p_id, hashed_password, p_title, p_text, p_visibility, CURRENT_TIMESTAMP);
+    INSERT INTO document (id, password_hash, title, text, visibility, time_created, view_count)
+    VALUES (p_id, hashed_password, p_title, p_text, p_visibility, CURRENT_TIMESTAMP, 0);
     -- Commit the transaction
     COMMIT;
 END create_document;
@@ -120,8 +120,8 @@ CREATE OR REPLACE PROCEDURE create_document_nopass
 BEGIN
     p_id := SYS_GUID();
     -- Insert data into the document table
-    INSERT INTO document (id, password_hash, title, text, visibility, time_created)
-    VALUES (p_id, null, p_title, p_text, p_visibility, CURRENT_TIMESTAMP);
+    INSERT INTO document (id, password_hash, title, text, visibility, time_created, view_count)
+    VALUES (p_id, null, p_title, p_text, p_visibility, CURRENT_TIMESTAMP, 0);
     -- Commit the transaction
     COMMIT;
 END create_document_nopass;
@@ -151,9 +151,8 @@ BEGIN
     -- Compare the hashed password with the stored password hash
     IF v_password_hash = v_hashed_password THEN
         RETURN TRUE; -- Password is verified
-    ELSE
-        RETURN FALSE; -- Password is not verified
     END IF;
+    RETURN FALSE; -- Password is not verified
 END check_document_password;
 /
 
@@ -166,24 +165,28 @@ CREATE OR REPLACE PROCEDURE update_document
     p_visibility IN document.visibility%TYPE
 ) IS
     v_password_hash VARCHAR2(64);
+    valid_password BOOLEAN;
+--    a NUMBER(20);
 BEGIN
+    valid_password := check_document_password(p_id, p_password);
     -- Check the password
-    IF check_document_password(p_id, p_password) THEN
-        -- Update the document table
+    IF valid_password THEN
+--        select count(*) into a from dual;
+--         Update the document table
         UPDATE document SET
             title = p_title,
             text = p_text,
             visibility = p_visibility
         WHERE id = p_id;
     ELSE
-        RAISE_APPLICATION_ERROR(-21001, 'Incorrect Document password');
+        RAISE_APPLICATION_ERROR(-20011, 'Incorrect Document password');
     END IF;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
-        RAISE_APPLICATION_ERROR(-21002, 'Document not found');
+        RAISE_APPLICATION_ERROR(-20012, 'Document not found');
 --    WHEN OTHERS THEN
---        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--        RAISE_APPLICATION_ERROR(-20999, 'An Exception Occured');
 END update_document;
 /
 
@@ -201,11 +204,14 @@ BEGIN
         -- Delete the document if the password is valid
         DELETE FROM document WHERE id = p_id;
     ELSE
-        RAISE_APPLICATION_ERROR(-21001, 'Incorrect Document password');
+        RAISE_APPLICATION_ERROR(-20011, 'Incorrect Document password');
     END IF;
---EXCEPTION
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        -- Document with given ID not found
+        RAISE_APPLICATION_ERROR(-20012, 'Document not found');
 --    WHEN OTHERS THEN
---        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--        RAISE_APPLICATION_ERROR(-20999, 'An Exception Occured');
 END delete_document;
 /
 
@@ -221,9 +227,9 @@ BEGIN
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
-        RAISE_APPLICATION_ERROR(-21002, 'Document not found');
+        RAISE_APPLICATION_ERROR(-20012, 'Document not found');
 --    WHEN OTHERS THEN
---        RAISE_APPLICATION_ERROR(-29999, 'An Exception Occured');
+--        RAISE_APPLICATION_ERROR(-20999, 'An Exception Occured');
 END increment_view_count;
 /
 
@@ -252,3 +258,5 @@ GRANT EXECUTE ON insert_document_comment TO public_user;
 GRANT SELECT ON latest_documents_view TO public_user;
 GRANT SELECT ON documents_view TO public_user;
 GRANT SELECT ON document_comment TO public_user;
+
+COMMIT;
