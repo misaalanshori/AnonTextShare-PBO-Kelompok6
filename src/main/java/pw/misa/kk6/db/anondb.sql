@@ -181,6 +181,7 @@ BEGIN
     ELSE
         RAISE_APPLICATION_ERROR(-20011, 'Incorrect Document password');
     END IF;
+    COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
@@ -206,6 +207,7 @@ BEGIN
     ELSE
         RAISE_APPLICATION_ERROR(-20011, 'Incorrect Document password');
     END IF;
+    COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
@@ -224,6 +226,7 @@ BEGIN
     UPDATE document SET
         view_count = view_count + 1
     WHERE id = document_id;
+    COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Document with given ID not found
