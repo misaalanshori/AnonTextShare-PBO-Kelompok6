@@ -4,8 +4,8 @@
  */
 package pw.misa.kk6.models;
 
+import java.util.ArrayList;
 import java.util.List;
-import pw.misa.kk6.Database.DatabaseConnection;
 
 /**
  *
@@ -16,6 +16,9 @@ public class TextDocument {
         private String name;
         private String text;
 
+        public Comment() {
+        }
+        
         public Comment(String name, String text) {
             this.name = name;
             this.text = text;
@@ -50,6 +53,55 @@ public class TextDocument {
 
     private List<Comment> comments;
 
+    public TextDocument() {
+    }
+
+    public TextDocument(String Pass, String Title, String Text) {
+        this.Pass = Pass;
+        this.Title = Title;
+        this.Text = Text;
+        this.viewCount = 0;
+        this.visibility = 1;
+        this.comments = new ArrayList<>();
+    }
+    
+    public TextDocument(String Title, String Text) {
+        this.Title = Title;
+        this.Text = Text;
+        this.viewCount = 0;
+        this.visibility = 1;
+        this.comments = new ArrayList<>();
+    }
+
+    public TextDocument(String Pass, String Title, String Text, int visibility) {
+        this.Pass = Pass;
+        this.Title = Title;
+        this.Text = Text;
+        this.visibility = visibility;
+        this.viewCount = 0;
+        this.comments = new ArrayList<>();
+    }
+    
+    public TextDocument(String Title, String Text, int visibility) {
+        this.Title = Title;
+        this.Text = Text;
+        this.visibility = visibility;
+        this.viewCount = 0;
+        this.comments = new ArrayList<>();
+    }
+
+    public TextDocument(String ID, String Pass, String Title, String Text, int visibility, int viewCount, List<Comment> comments) {
+        this.ID = ID;
+        this.Pass = Pass;
+        this.Title = Title;
+        this.Text = Text;
+        this.visibility = visibility;
+        this.viewCount = viewCount;
+        this.comments = comments;
+    }
+    
+    
+    
     public String getID() {
         return ID;
     }
@@ -106,7 +158,14 @@ public class TextDocument {
         this.viewCount = viewCount;
     }
 
-    
-    
-        
+    public void print() {
+        System.out.println("id: " + ID);
+        System.out.println("title: " + Title);
+        System.out.println("text: " + Text);
+        System.out.println("view count: " + viewCount);
+        System.out.println("visibility: " + visibility);
+        for (TextDocument.Comment comment : comments) {
+            System.out.println("Comment: " + comment.getName() + " - " + comment.getText());
+        }
+    }     
 }
