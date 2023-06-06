@@ -38,6 +38,7 @@ public class TextDocumentDao {
                 cStmt.setString(3, document.getTitle());
                 cStmt.setString(4, document.getText());
                 cStmt.setInt(5, document.getVisibility());
+                cStmt.execute();
                 System.out.println("INFO: Dokumen inserted dengan password");
             } else {
                 String sql = "{CALL sys.create_document_nopass(?, ?, ?, ?, )}";
@@ -46,6 +47,7 @@ public class TextDocumentDao {
                 cStmt.setString(2, document.getTitle());
                 cStmt.setString(3, document.getText());
                 cStmt.setInt(4, document.getVisibility());
+                cStmt.execute();
                 System.out.println("INFO: Dokumen inserted tanpa password");
             }
             return cStmt.getString(1);
@@ -65,6 +67,7 @@ public class TextDocumentDao {
             cStmt.setString(3, document.getTitle());
             cStmt.setString(4, document.getText());
             cStmt.setInt(5, document.getVisibility());
+            cStmt.execute();
             System.out.println("INFO: Dokumen updated");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
@@ -77,6 +80,7 @@ public class TextDocumentDao {
             CallableStatement cStmt = conn.prepareCall(sql);
             cStmt.setString(1, id);
             cStmt.setString(2, pass);
+            cStmt.execute();
             System.out.println("INFO: Dokumen deleted");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
@@ -91,6 +95,7 @@ public class TextDocumentDao {
             cStmt.setString(1, id);
             cStmt.setString(2, comment.getName());
             cStmt.setString(3, comment.getText());
+            cStmt.execute();
             System.out.println("INFO: Comment inserted");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
@@ -104,7 +109,7 @@ public class TextDocumentDao {
         PreparedStatement stmt;
         ResultSet rs;
         try {
-            stmt = conn.prepareStatement("SELECT * FROM sys.documents_view WHERE id=" + id);
+            stmt = conn.prepareStatement("SELECT * FROM sys.documents_view WHERE id='" + id + "'");
             rs = stmt.executeQuery();
             doc = new TextDocument();
             while (rs.next()) {
@@ -115,7 +120,7 @@ public class TextDocumentDao {
                 doc.setVisibility(rs.getInt("visibility"));
             }
             
-            stmt = conn.prepareStatement("SELECT * FROM sys.document_comment WHERE document_id=" + id);
+            stmt = conn.prepareStatement("SELECT * FROM sys.document_comment WHERE document_id='" + id + "'");
             rs = stmt.executeQuery();
             while (rs.next()) {
                 commentList.add(doc.new Comment(rs.getString("name"), rs.getString("text")));
@@ -125,6 +130,7 @@ public class TextDocumentDao {
             String sql = "{CALL sys.increment_view_count(?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
             cStmt.setString(1, id);
+            cStmt.execute();
             System.out.println("INFO: Document Loaded");
         } catch (SQLException e) {
             System.out.println("Terjadi Kesalahan SQL: " + e.getMessage());
@@ -147,6 +153,7 @@ public class TextDocumentDao {
                 doc.setTitle(rs.getString("title"));
                 doc.setViewCount(rs.getInt("view_count"));
                 doc.setText("");
+                doc.setComments(new ArrayList<>());
                 doc.setVisibility(1);
                 docList.add(doc);
             }
@@ -155,4 +162,5 @@ public class TextDocumentDao {
         }
         return docList;
     }
+
 }
