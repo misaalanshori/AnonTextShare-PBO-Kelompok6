@@ -163,4 +163,38 @@ public class TextDocumentDao {
         return docList;
     }
 
+      public static void main(String args[]) {
+        TextDocument docWithPass = new TextDocument("APassword", "a Title", "The Text contents",1);
+        
+        TextDocumentDao dao = new TextDocumentDao();
+        dao.select("FD6DFE8606DCE200E050A8C002800938");
+        
+        String docWithPassID = dao.insert(docWithPass);
+        System.out.println("docWithPass ID: " + docWithPassID);
+        
+        dao.insertComment(docWithPassID, docWithPass.new Comment("komen", "comment"));
+        dao.insertComment(docWithPassID, docWithPass.new Comment("komensss", "komment"));
+
+        TextDocument docWithPassNew = dao.select(docWithPassID);
+        docWithPassNew.print();
+        
+        System.out.println("latest: ");
+        List<TextDocument> latestDocs = dao.selectLatest(10);
+        for (TextDocument doc : latestDocs) {
+            System.out.println("===");
+            doc.print();
+        }
+        
+        System.out.println("update: ");
+        docWithPassNew.setTitle("Sebuah Judul");
+        docWithPassNew.setText("Sebuah Teks");
+        docWithPassNew.setPass("APassword");
+        dao.update(docWithPassNew);
+        docWithPassNew = dao.select(docWithPassID);
+        docWithPassNew.print();
+        
+        dao.delete(docWithPassID, "APassword");
+        docWithPassNew = dao.select(docWithPassID);
+        docWithPassNew.print();
+    }
 }
