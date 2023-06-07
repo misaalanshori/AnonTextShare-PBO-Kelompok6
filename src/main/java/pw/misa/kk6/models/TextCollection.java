@@ -5,7 +5,6 @@
 package pw.misa.kk6.models;
 
 import java.util.List;
-import pw.misa.kk6.AnonymousText.Document;
 
 /**
  *
@@ -18,19 +17,19 @@ public class TextCollection {
 
 	private String Title;
 
-	private List<Document> Contents;
+	private List<TextDocument> Contents;
 
         public TextCollection() {
         }
 
-        public TextCollection(String ID, String Pass, String Title, List<Document> Contents) {
+        public TextCollection(String ID, String Pass, String Title, List<TextDocument> Contents) {
             this.ID = ID;
             this.Pass = Pass;
             this.Title = Title;
             this.Contents = Contents;
         }
         
-        public TextCollection(String ID, String Title, List<Document> Contents) {
+        public TextCollection(String ID, String Title, List<TextDocument> Contents) {
             this.ID = ID;
             this.Title = Title;
             this.Contents = Contents;
@@ -60,11 +59,11 @@ public class TextCollection {
         this.Title = Title;
     }
 
-    public List<Document> getContents() {
+    public List<TextDocument> getContents() {
         return Contents;
     }
 
-    public void setContents(List<Document> Contents) {
+    public void setContents(List<TextDocument> Contents) {
         this.Contents = Contents;
     }
 
