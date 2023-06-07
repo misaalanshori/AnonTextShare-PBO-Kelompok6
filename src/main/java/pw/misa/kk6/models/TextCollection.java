@@ -68,6 +68,17 @@ public class TextCollection {
     }
 
         
-        
+    public void print() {
+        System.out.println("id: " + ID);
+        System.out.println("title: " + Title);
+        for (TextDocument doc : Contents) {
+            System.out.println("Documents: " + doc);
+        }
+    }     
+    
+    @Override
+    public String toString() {
+        return ID + " - " + Title;
+    }
 	
 }

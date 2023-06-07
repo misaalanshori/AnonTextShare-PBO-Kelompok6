@@ -167,5 +167,12 @@ public class TextDocument {
         for (TextDocument.Comment comment : comments) {
             System.out.println("Comment: " + comment.getName() + " - " + comment.getText());
         }
-    }     
+    }
+
+    @Override
+    public String toString() {
+        return ID + " - " + Title  + " - " + viewCount + " - " + visibility;
+    }
+    
+    
 }
