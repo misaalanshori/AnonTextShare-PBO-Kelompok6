@@ -41,7 +41,7 @@ public class TextDocumentDao {
                 cStmt.execute();
                 System.out.println("INFO: Dokumen inserted dengan password");
             } else {
-                String sql = "{CALL sys.create_document_nopass(?, ?, ?, ?, )}";
+                String sql = "{CALL sys.create_document_nopass(?, ?, ?, ?)}";
                 cStmt = conn.prepareCall(sql);
                 cStmt.registerOutParameter(1, Types.VARCHAR);
                 cStmt.setString(2, document.getTitle());
@@ -164,7 +164,7 @@ public class TextDocumentDao {
     }
 
       public static void main(String args[]) {
-        TextDocument docWithPass = new TextDocument("APassword", "a Title", "The Text contents",1);
+        TextDocument docWithPass = new TextDocument("", "a Title", "The Text contents",1);
         
         TextDocumentDao dao = new TextDocumentDao();
         dao.select("FD6DFE8606DCE200E050A8C002800938");
