@@ -15,6 +15,8 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
+        this.IsiPasswordBuat.setVisible(false);
+        
     }
 
     /**
@@ -28,24 +30,42 @@ public class MainView extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        TabelDokumenTerbaru = new javax.swing.JTable();
+        DokumenTerbaru = new javax.swing.JLabel();
+        IsiKode = new javax.swing.JTextField();
+        IsiPasswordAkses = new javax.swing.JPasswordField();
+        TombolAkses = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        RadioButton1 = new javax.swing.JRadioButton();
+        RadioButton2 = new javax.swing.JRadioButton();
+        Kode = new javax.swing.JLabel();
+        PasswordAkses = new javax.swing.JLabel();
+        Buat = new javax.swing.JLabel();
+        TipeAkses = new javax.swing.JLabel();
+        Akses = new javax.swing.JLabel();
+        TipeBuat = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        Judul = new javax.swing.JLabel();
+        IsiPasswordBuat = new javax.swing.JTextField();
+        Teks = new javax.swing.JLabel();
+        IsiTeks = new javax.swing.JTextField();
+        TipeBuatPU = new javax.swing.JLabel();
+        Public = new javax.swing.JRadioButton();
+        Unlisted = new javax.swing.JRadioButton();
+        TombolBuat = new javax.swing.JButton();
+        PasswordBuat = new javax.swing.JLabel();
+        IsiJudul = new javax.swing.JTextField();
+        KodeBaru = new javax.swing.JLabel();
+        IsiKodeBaru = new javax.swing.JTextField();
+        KodeDok = new javax.swing.JLabel();
+        IsiKodeDok = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TabelDokumenTerbaru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -71,31 +91,89 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TabelDokumenTerbaru);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Dokumen Terbaru");
+        DokumenTerbaru.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        DokumenTerbaru.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DokumenTerbaru.setText("Dokumen Terbaru");
 
-        jButton1.setText("Buka");
+        TombolAkses.setText("Akses");
 
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Dokumen");
+        buttonGroup1.add(RadioButton1);
+        RadioButton1.setText("Dokumen");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Koleksi");
+        buttonGroup1.add(RadioButton2);
+        RadioButton2.setText("Koleksi");
 
-        jLabel2.setText("Kode Dokumen");
+        Kode.setText("Kode");
 
-        jLabel3.setText("Password");
+        PasswordAkses.setText("Password");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Akses");
+        Buat.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Buat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Buat.setText("Buat");
 
-        jLabel5.setText("Tipe");
+        TipeAkses.setText("Tipe");
+
+        Akses.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Akses.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Akses.setText("Akses");
+
+        TipeBuat.setText("Tipe");
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Dokumen");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton4);
+        jRadioButton4.setText("Koleksi");
+
+        Judul.setText("Judul");
+
+        IsiPasswordBuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                IsiPasswordBuatMouseClicked(evt);
+            }
+        });
+
+        Teks.setText("Teks");
+
+        TipeBuatPU.setText("Tipe");
+
+        buttonGroup1.add(Public);
+        Public.setText("Public");
+        Public.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PublicMouseClicked(evt);
+            }
+        });
+        Public.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PublicActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(Unlisted);
+        Unlisted.setText("Unlisted");
+
+        TombolBuat.setText("Buat");
+        TombolBuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TombolBuatActionPerformed(evt);
+            }
+        });
+
+        PasswordBuat.setText("Password");
+
+        KodeBaru.setText("Kode baru :");
+
+        KodeDok.setText("Kode Dok :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,61 +182,157 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))
-                .addGap(24, 24, 24)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(DokumenTerbaru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton2))
-                            .addComponent(jPasswordField1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 24, 24))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Kode)
+                                    .addComponent(PasswordAkses))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(IsiKode, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(IsiPasswordAkses, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TombolAkses, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(TipeBuat)
+                                            .addComponent(Judul))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(40, 40, 40)
+                                                .addComponent(IsiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(60, 60, 60)
+                                                .addComponent(jRadioButton3)
+                                                .addGap(44, 44, 44)
+                                                .addComponent(jRadioButton4)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(46, 46, 46)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(PasswordBuat)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(Public)
+                                                        .addGap(12, 12, 12))
+                                                    .addComponent(Unlisted))
+                                                .addGap(0, 40, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(TipeBuatPU)
+                                                .addGap(61, 61, 61))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(KodeBaru)
+                                            .addComponent(Teks)
+                                            .addComponent(KodeDok))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(IsiTeks)
+                                            .addComponent(IsiKodeBaru)
+                                            .addComponent(IsiKodeDok, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(IsiPasswordBuat)
+                                            .addComponent(TombolBuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(Akses, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Buat, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TipeAkses)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addComponent(RadioButton1)
+                                .addGap(46, 46, 46)
+                                .addComponent(RadioButton2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(22, 22, 22)
+                .addComponent(DokumenTerbaru)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Akses, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buat, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TipeAkses)
+                    .addComponent(RadioButton1)
+                    .addComponent(RadioButton2)
+                    .addComponent(TipeBuat)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Kode)
+                    .addComponent(IsiKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Judul)
+                    .addComponent(IsiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TipeBuatPU))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PasswordAkses)
+                            .addComponent(IsiPasswordAkses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Teks))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jLabel5))
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                        .addComponent(TombolAkses))
+                    .addComponent(IsiTeks, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(Public)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Unlisted)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24))
+                        .addComponent(PasswordBuat, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(KodeDok)
+                    .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IsiPasswordBuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(KodeBaru)
+                    .addComponent(IsiKodeBaru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TombolBuat))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void PublicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PublicActionPerformed
+        this.IsiPasswordBuat.setVisible(true);
+    }//GEN-LAST:event_PublicActionPerformed
+
+    private void TombolBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolBuatActionPerformed
+        this.IsiPasswordBuat.setVisible(true);
+    }//GEN-LAST:event_TombolBuatActionPerformed
+
+    private void IsiPasswordBuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IsiPasswordBuatMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IsiPasswordBuatMouseClicked
+
+    private void PublicMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PublicMouseClicked
+        this.IsiPasswordBuat.setVisible(true);
+    }//GEN-LAST:event_PublicMouseClicked
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,19 +370,37 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Akses;
+    private javax.swing.JLabel Buat;
+    private javax.swing.JLabel DokumenTerbaru;
+    private javax.swing.JTextField IsiJudul;
+    private javax.swing.JTextField IsiKode;
+    private javax.swing.JTextField IsiKodeBaru;
+    private javax.swing.JTextField IsiKodeDok;
+    private javax.swing.JPasswordField IsiPasswordAkses;
+    private javax.swing.JTextField IsiPasswordBuat;
+    private javax.swing.JTextField IsiTeks;
+    private javax.swing.JLabel Judul;
+    private javax.swing.JLabel Kode;
+    private javax.swing.JLabel KodeBaru;
+    private javax.swing.JLabel KodeDok;
+    private javax.swing.JLabel PasswordAkses;
+    private javax.swing.JLabel PasswordBuat;
+    private javax.swing.JRadioButton Public;
+    private javax.swing.JRadioButton RadioButton1;
+    private javax.swing.JRadioButton RadioButton2;
+    private javax.swing.JTable TabelDokumenTerbaru;
+    private javax.swing.JLabel Teks;
+    private javax.swing.JLabel TipeAkses;
+    private javax.swing.JLabel TipeBuat;
+    private javax.swing.JLabel TipeBuatPU;
+    private javax.swing.JButton TombolAkses;
+    private javax.swing.JButton TombolBuat;
+    private javax.swing.JRadioButton Unlisted;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
