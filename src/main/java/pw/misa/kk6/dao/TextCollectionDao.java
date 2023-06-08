@@ -72,12 +72,15 @@ public class TextCollectionDao {
             
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
-        return null;
     }
 
     // Method untuk mengupdate attribut collection
     public void update(TextCollection collection) {
+        if (collection == null || collection.getID() == null || collection.getID().isBlank()) {
+            throw new DaoException("Koleksi Tidak Boleh Kosong!");
+        }
         try {
             String sql = "{CALL sys.update_collection(?, ?, ?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
@@ -88,6 +91,12 @@ public class TextCollectionDao {
             System.out.println("INFO: Koleksi updated");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20021) {
+                throw new DaoException("Password Koleksi Salah", e);
+            } else if (e.getErrorCode() == -20022) {
+                throw new DaoException("Koleksi Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
     
@@ -103,6 +112,7 @@ public class TextCollectionDao {
             System.out.println("INFO: Dokumen inserted ke koleksi");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
 
@@ -118,10 +128,17 @@ public class TextCollectionDao {
             System.out.println("INFO: Dokumen deleted dari koleksi");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
 
     public void delete(String id, String pass) {
+        if (id == null || id.isBlank()) {
+            throw new DaoException("ID Koleksi Tidak Boleh Kosong!");
+        }
+        if (pass == null || pass.isBlank()) {
+            throw new DaoException("Password Koleksi Tidak Boleh Kosong!");
+        }
         try {
             String sql = "{CALL sys.delete_collection(?, ?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
@@ -131,10 +148,19 @@ public class TextCollectionDao {
             System.out.println("INFO: Koleksi updated");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20021) {
+                throw new DaoException("Password Koleksi Salah", e);
+            } else if (e.getErrorCode() == -20022) {
+                throw new DaoException("Koleksi Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
     
     public TextCollection select(String id) {
+        if (id == null || id.isBlank()) {
+            throw new DaoException("ID Koleksi Tidak Boleh Kosong!");
+        }
         TextCollection collection = null;
         PreparedStatement stmt;
         ResultSet rs;
@@ -147,8 +173,12 @@ public class TextCollectionDao {
             rs = stmt.executeQuery();
             
             while (rs.next()) {
-                collection.setID(id);
+                collection.setID(rs.getString("id"));
                 collection.setTitle(rs.getString("title"));
+            }
+            
+            if (collection.getID() == null) {
+                throw new DaoException("Koleksi Tidak Ditemukan");
             }
 
             stmt = conn.prepareStatement("SELECT id, view_count, title, visibility FROM sys.collection_document " +
@@ -170,6 +200,7 @@ public class TextCollectionDao {
             System.out.println("INFO: Collection Loaded");
         } catch (SQLException e) {
             System.out.println("Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
         return collection;
     }
@@ -187,28 +218,60 @@ public class TextCollectionDao {
         System.out.println("new collection:");
         colwithpass.print();
         
-        colwithpass.setTitle("AAAAAAAAAAAAAAAAcollection");
-        colwithpass.setPass("apassw");
-        cdao.update(colwithpass);
-        colwithpass = cdao.select(colwithpass.getID());
-        System.out.println("update collection");
-        colwithpass.print();
         
-        colwithpass.setPass("apassw");
-        cdao.insertDocument(colwithpass, new TextDocument("a title 4", "a content 4"));
-        colwithpass = cdao.select(colwithpass.getID());
-        System.out.println("insert to collection");
-        colwithpass.print();
+        try {
+            colwithpass.setTitle("AAAAAAAAAAAAAAAAcollection");
+            colwithpass.setPass("apassw");
+            cdao.update(colwithpass);
+            colwithpass = cdao.select(colwithpass.getID());
+            System.out.println("update collection");
+            colwithpass.print();
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
         
-        colwithpass.setPass("apassw");
-        cdao.deleteDocument(colwithpass, docs.get(0));
-        colwithpass = cdao.select(colwithpass.getID());
-        System.out.println("delete from collection");
-        colwithpass.print();
         
-        cdao.delete(colwithpass.getID(), "apassw");
-        colwithpass = cdao.select(colwithpass.getID());
-        System.out.println("deleted collection");
-        colwithpass.print();
+        try {
+            colwithpass.setPass("apassw");
+            cdao.insertDocument(colwithpass, new TextDocument("a title 4", "a content 4"));
+            colwithpass = cdao.select(colwithpass.getID());
+            System.out.println("insert to collection");
+            colwithpass.print();
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
+        
+        
+        try {
+            colwithpass.setPass("apassw");
+            cdao.deleteDocument(colwithpass, docs.get(0));
+            colwithpass = cdao.select(colwithpass.getID());
+            System.out.println("delete from collection");
+            colwithpass.print();
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
+        
+        
+        try {
+            cdao.delete(colwithpass.getID(), "apassw");
+            colwithpass = cdao.select(colwithpass.getID());
+            System.out.println("deleted collection");
+            colwithpass.print();
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
     }
 }

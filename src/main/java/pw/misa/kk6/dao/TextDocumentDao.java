@@ -28,6 +28,9 @@ public class TextDocumentDao {
     
     
     public String insert(TextDocument document) {
+        if (document == null) {
+            throw new DaoException("Dokumen Tidak Boleh Kosong!");
+        }
         try {
             CallableStatement cStmt;
             if (document.getPass() != null && !document.getPass().isBlank()) {
@@ -54,11 +57,14 @@ public class TextDocumentDao {
             
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
-        return null;
     }
     
     public void update(TextDocument document) {
+        if (document == null || document.getID() == null || document.getID().isBlank()) {
+            throw new DaoException("Dokumen Tidak Boleh Kosong!");
+        }
         try {
             String sql = "{CALL sys.update_document(?, ?, ?, ?, ?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
@@ -71,10 +77,22 @@ public class TextDocumentDao {
             System.out.println("INFO: Dokumen updated");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20011) {
+                throw new DaoException("Password Dokumen Salah", e);
+            } else if (e.getErrorCode() == -20012) {
+                throw new DaoException("Dokumen Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
     
     public void delete(String id, String pass) {
+        if (id == null || id.isBlank()) {
+            throw new DaoException("ID Dokumen Tidak Boleh Kosong!");
+        }
+        if (pass == null || pass.isBlank()) {
+            throw new DaoException("Password Dokumen Tidak Boleh Kosong!");
+        }
          try {
             String sql = "{CALL sys.delete_document(?, ?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
@@ -84,11 +102,23 @@ public class TextDocumentDao {
             System.out.println("INFO: Dokumen deleted");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20011) {
+                throw new DaoException("Password Dokumen Salah", e);
+            } else if (e.getErrorCode() == -20012) {
+                throw new DaoException("Dokumen Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
     
     // Method untuk menambahkan komentar pada dokumen
     public void insertComment(String id, TextDocument.Comment comment) {
+        if (id == null || id.isBlank()) {
+            throw new DaoException("ID Dokumen Tidak Boleh Kosong!");
+        }
+        if (comment == null) {
+            throw new DaoException("Komentar Tidak Boleh null!");
+        }
         try {
             String sql = "{CALL sys.insert_document_comment(?, ?, ?)}";
             CallableStatement cStmt = conn.prepareCall(sql);
@@ -99,11 +129,17 @@ public class TextDocumentDao {
             System.out.println("INFO: Comment inserted");
         } catch (SQLException e) {
             System.out.println("ERROR: Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20012) {
+                throw new DaoException("Dokumen Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
     }
 
     public TextDocument select(String id) {
-        
+        if (id == null || id.isBlank()) {
+            throw new DaoException("ID Dokumen Tidak Boleh Kosong!");
+        }
         TextDocument doc = null;
         ArrayList<TextDocument.Comment> commentList = new ArrayList<>();
         PreparedStatement stmt;
@@ -113,11 +149,15 @@ public class TextDocumentDao {
             rs = stmt.executeQuery();
             doc = new TextDocument();
             while (rs.next()) {
-                doc.setID(id);
+                doc.setID(rs.getString("id"));
                 doc.setTitle(rs.getString("title"));
                 doc.setText(rs.getString("text"));
                 doc.setViewCount(rs.getInt("view_count"));
                 doc.setVisibility(rs.getInt("visibility"));
+            }
+            
+            if (doc.getID() == null) {
+                throw new DaoException("Dokumen Tidak Ditemukan");
             }
             
             stmt = conn.prepareStatement("SELECT * FROM sys.document_comment WHERE document_id='" + id + "'");
@@ -134,11 +174,18 @@ public class TextDocumentDao {
             System.out.println("INFO: Document Loaded");
         } catch (SQLException e) {
             System.out.println("Terjadi Kesalahan SQL: " + e.getMessage());
+            if (e.getErrorCode() == -20012) {
+                throw new DaoException("Dokumen Tidak Ditemukan", e);
+            }
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
         return doc;
     }
     
     public List<TextDocument> selectLatest(int count) {
+        if (count < 1) {
+            throw new DaoException("Jumlah Latest Document harus >= 1");
+        }
         TextDocument doc = null;
         ArrayList<TextDocument> docList = new ArrayList<>();
         PreparedStatement stmt;
@@ -159,6 +206,7 @@ public class TextDocumentDao {
             }
         } catch (SQLException e) {
             System.out.println("Terjadi Kesalahan SQL: " + e.getMessage());
+            throw new DaoException("Terjadi Kesalahan SQL", e);
         }
         return docList;
     }
@@ -167,7 +215,6 @@ public class TextDocumentDao {
         TextDocument docWithPass = new TextDocument("", "a Title", "The Text contents",1);
         
         TextDocumentDao dao = new TextDocumentDao();
-        dao.select("FD6DFE8606DCE200E050A8C002800938");
         
         String docWithPassID = dao.insert(docWithPass);
         System.out.println("docWithPass ID: " + docWithPassID);
@@ -189,12 +236,30 @@ public class TextDocumentDao {
         docWithPassNew.setTitle("Sebuah Judul");
         docWithPassNew.setText("Sebuah Teks");
         docWithPassNew.setPass("APassword");
-        dao.update(docWithPassNew);
+        
+        try {
+            dao.update(docWithPassNew);
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
+        
         docWithPassNew = dao.select(docWithPassID);
         docWithPassNew.print();
         
-        dao.delete(docWithPassID, "APassword");
-        docWithPassNew = dao.select(docWithPassID);
+        
+        try {
+            dao.delete(docWithPassID, "APassword");
+            docWithPassNew = dao.select(docWithPassID);
+        } catch (DaoException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            if (e.getSqlException() != null) {
+                System.out.println("SQL Exception: " + e.getSqlException().getMessage());
+            }
+        }
+        
         docWithPassNew.print();
     }
 }
