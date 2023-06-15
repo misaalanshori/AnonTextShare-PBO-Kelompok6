@@ -4,18 +4,75 @@
  */
 package pw.misa.kk6.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import pw.misa.kk6.controllers.CollectionController;
+
 /**
  *
  * @author ASUS
  */
 public class MenuLoadCollection extends javax.swing.JFrame {
 
+    CollectionController cc;
     /**
      * Creates new form MenuLoadCollection
+     * @param controller
      */
-    public MenuLoadCollection() {
+    public MenuLoadCollection(CollectionController controller) {
         initComponents();
+        this.cc = controller;
     }
+
+    public JLabel getCollection() {
+        return Collection;
+    }
+
+    public JButton getHapus() {
+        return Hapus;
+    }
+
+    public JButton getHapusKoleksi() {
+        return HapusKoleksi;
+    }
+
+    public JTextField getJudul() {
+        return Judul;
+    }
+
+    public JButton getKembali() {
+        return Kembali;
+    }
+
+    public JTextField getKodeDok() {
+        return KodeDok;
+    }
+
+    public JList<String> getListDokumen() {
+        return ListDokumen;
+    }
+
+    public JButton getPerbarui() {
+        return Perbarui;
+    }
+
+    public JScrollPane getScroolDokumen() {
+        return ScroolDokumen;
+    }
+
+    public JButton getTambahkan() {
+        return Tambahkan;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,6 +94,7 @@ public class MenuLoadCollection extends javax.swing.JFrame {
         HapusKoleksi = new javax.swing.JButton();
         ScroolDokumen = new javax.swing.JScrollPane();
         ListDokumen = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -50,10 +108,18 @@ public class MenuLoadCollection extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Tambahkan.setText("Tambahkan");
+        Tambahkan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TambahkanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Tambahkan, new org.netbeans.lib.awtextra.AbsoluteConstraints(299, 41, -1, -1));
 
         Collection.setText("Collection :");
+        getContentPane().add(Collection, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 9, -1, -1));
 
         Perbarui.setText("Perbarui");
         Perbarui.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +127,7 @@ public class MenuLoadCollection extends javax.swing.JFrame {
                 PerbaruiActionPerformed(evt);
             }
         });
+        getContentPane().add(Perbarui, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 6, 91, -1));
 
         Hapus.setText("Hapus");
         Hapus.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +135,7 @@ public class MenuLoadCollection extends javax.swing.JFrame {
                 HapusActionPerformed(evt);
             }
         });
+        getContentPane().add(Hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 41, -1, -1));
 
         Kembali.setText("Kembali");
         Kembali.addActionListener(new java.awt.event.ActionListener() {
@@ -75,81 +143,78 @@ public class MenuLoadCollection extends javax.swing.JFrame {
                 KembaliActionPerformed(evt);
             }
         });
+        getContentPane().add(Kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(504, 6, 104, -1));
 
         Judul.setText("judul");
+        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 6, 126, -1));
 
         KodeDok.setText("Kode Dokumen");
+        KodeDok.setToolTipText("");
+        getContentPane().add(KodeDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 41, 126, -1));
 
         HapusKoleksi.setText("Hapus Koleksi");
+        HapusKoleksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HapusKoleksiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(HapusKoleksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(504, 41, -1, -1));
 
         ListDokumen.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        ListDokumen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListDokumenMouseClicked(evt);
+            }
+        });
         ScroolDokumen.setViewportView(ListDokumen);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScroolDokumen)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Collection)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Judul)
-                            .addComponent(KodeDok, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Perbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Hapus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Tambahkan)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(HapusKoleksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Kembali, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+        getContentPane().add(ScroolDokumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 76, 602, 219));
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 620, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Collection)
-                    .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Perbarui)
-                    .addComponent(Kembali))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Hapus)
-                    .addComponent(HapusKoleksi)
-                    .addComponent(Tambahkan))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ScroolDokumen, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                .addContainerGap())
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 310));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void PerbaruiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerbaruiActionPerformed
-
+        cc.updateCollec();
     }//GEN-LAST:event_PerbaruiActionPerformed
 
     private void HapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusActionPerformed
-
+        cc.deleteDoc();
     }//GEN-LAST:event_HapusActionPerformed
 
     private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
- 
+        cc.kembali();
     }//GEN-LAST:event_KembaliActionPerformed
+
+    private void TambahkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahkanActionPerformed
+        cc.addDoc();
+    }//GEN-LAST:event_TambahkanActionPerformed
+
+    private void HapusKoleksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusKoleksiActionPerformed
+        cc.deleteCollec();
+    }//GEN-LAST:event_HapusKoleksiActionPerformed
+
+    private void ListDokumenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListDokumenMouseClicked
+        cc.loadDocument(this.ListDokumen.getSelectedIndex());
+    }//GEN-LAST:event_ListDokumenMouseClicked
 
     /**
      * @param args the command line arguments
@@ -179,11 +244,7 @@ public class MenuLoadCollection extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuLoadCollection().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -198,5 +259,6 @@ public class MenuLoadCollection extends javax.swing.JFrame {
     private javax.swing.JScrollPane ScroolDokumen;
     private javax.swing.JButton Tambahkan;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

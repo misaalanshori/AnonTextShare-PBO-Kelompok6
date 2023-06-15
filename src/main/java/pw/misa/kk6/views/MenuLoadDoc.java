@@ -4,18 +4,96 @@
  */
 package pw.misa.kk6.views;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import pw.misa.kk6.controllers.DocumentController;
+
 /**
  *
  * @author ASUS
  */
 public class MenuLoadDoc extends javax.swing.JFrame {
 
+    DocumentController dc;
     /**
      * Creates new form MenuLoadDoc
+     * @param controller
      */
-    public MenuLoadDoc() {
+    public MenuLoadDoc(DocumentController controller) {
         initComponents();
+        this.dc = controller;
     }
+
+    public JLabel getDokumen() {
+        return Dokumen;
+    }
+
+    public JButton getHapus() {
+        return Hapus;
+    }
+
+    public JTextField getIsi() {
+        return Isi;
+    }
+
+    public JTextField getIsiDokumen() {
+        return IsiDokumen;
+    }
+
+    public JLabel getIsiTotalAkses() {
+        return IsiTotalAkses;
+    }
+
+    public JTextField getJudul() {
+        return Judul;
+    }
+
+    public JButton getKembali() {
+        return Kembali;
+    }
+
+    public JButton getKirim() {
+        return Kirim;
+    }
+
+    public JTextField getNama() {
+        return Nama;
+    }
+
+    public JButton getPerbarui() {
+        return Perbarui;
+    }
+
+    public JRadioButton getPublic() {
+        return Public;
+    }
+
+    public JScrollPane getScroolListKomen() {
+        return ScroolListKomen;
+    }
+
+    public JLabel getTotalAkses() {
+        return TotalAkses;
+    }
+
+    public JRadioButton getUnlisted() {
+        return Unlisted;
+    }
+
+    public ButtonGroup getButtonGroup1() {
+        return buttonGroup1;
+    }
+
+    public JList<String> getjList1() {
+        return jList1;
+    }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,10 +120,13 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         Unlisted = new javax.swing.JRadioButton();
         Public = new javax.swing.JRadioButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Dokumen.setText("Dokumen :");
+        getContentPane().add(Dokumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 9, -1, -1));
 
         Hapus.setText("Hapus");
         Hapus.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +134,7 @@ public class MenuLoadDoc extends javax.swing.JFrame {
                 HapusActionPerformed(evt);
             }
         });
+        getContentPane().add(Hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 41, 237, -1));
 
         Kembali.setText("Kembali");
         Kembali.addActionListener(new java.awt.event.ActionListener() {
@@ -60,22 +142,41 @@ public class MenuLoadDoc extends javax.swing.JFrame {
                 KembaliActionPerformed(evt);
             }
         });
+        getContentPane().add(Kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 6, 237, -1));
 
         Judul.setText("Judul");
+        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 6, 134, -1));
 
         Perbarui.setText("perbarui");
+        Perbarui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PerbaruiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Perbarui, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 6, 89, -1));
 
         TotalAkses.setText("Total Akses :");
+        getContentPane().add(TotalAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 44, -1, -1));
 
         IsiTotalAkses.setText("IsiTotalAkses");
+        getContentPane().add(IsiTotalAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 44, -1, -1));
 
         Nama.setText("Nama ");
+        getContentPane().add(Nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 234, 141, -1));
 
         Isi.setText("Isi");
+        getContentPane().add(Isi, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 265, 240, -1));
 
         Kirim.setText("Kirim");
+        Kirim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KirimActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Kirim, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 234, 78, -1));
 
         IsiDokumen.setText("Isi");
+        getContentPane().add(IsiDokumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 76, 310, 211));
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -84,88 +185,52 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         });
         ScroolListKomen.setViewportView(jList1);
 
+        getContentPane().add(ScroolListKomen, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 76, 237, -1));
+
         buttonGroup1.add(Unlisted);
         Unlisted.setText("Unlisted");
+        getContentPane().add(Unlisted, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 42, -1, -1));
 
         buttonGroup1.add(Public);
         Public.setText("Public");
+        getContentPane().add(Public, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 42, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(IsiDokumen)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(TotalAkses)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(IsiTotalAkses)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Unlisted)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Public))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Dokumen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Perbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Kembali, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                            .addComponent(Hapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(Nama)
-                            .addGap(18, 18, 18)
-                            .addComponent(Kirim, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(ScroolListKomen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Isi, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Dokumen)
-                    .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Perbarui)
-                    .addComponent(Kembali))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Hapus)
-                    .addComponent(TotalAkses)
-                    .addComponent(IsiTotalAkses)
-                    .addComponent(Unlisted)
-                    .addComponent(Public))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ScroolListKomen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Kirim))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Isi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(IsiDokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void HapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HapusActionPerformed
-
+        dc.deleteDocument();
     }//GEN-LAST:event_HapusActionPerformed
 
     private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
-
+        dc.kembali();
+//        MainMenu frame2 = new MainMenu();  // Membuat instance frame sebelumnya
+//        frame2.setVisible(true);
     }//GEN-LAST:event_KembaliActionPerformed
+
+    private void PerbaruiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerbaruiActionPerformed
+        dc.updateDocument();
+    }//GEN-LAST:event_PerbaruiActionPerformed
+
+    private void KirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KirimActionPerformed
+        dc.insertComment();
+        dc.isiComment();
+    }//GEN-LAST:event_KirimActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,11 +260,7 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuLoadDoc().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -219,5 +280,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
     private javax.swing.JRadioButton Unlisted;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JList<String> jList1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
