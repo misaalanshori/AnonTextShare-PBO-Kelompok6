@@ -38,6 +38,7 @@ public class CollectionController {
         this.buatCollec = new BuatKoleksi(this);
         this.dc = new DocumentController(menuAkses);
         this.loadDoc = new MenuLoadDoc(dc);
+        this.dc.setLoadDoc(this.loadDoc);
         this.collectionDao = new TextCollectionDao();
         this.documentDao = new TextDocumentDao();
         this.listDocument = documentDao.selectLatest(15);

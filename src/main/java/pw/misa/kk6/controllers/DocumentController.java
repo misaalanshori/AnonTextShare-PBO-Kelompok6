@@ -31,6 +31,12 @@ public class DocumentController {
 
     }
 
+    public void setLoadDoc(MenuLoadDoc loadDoc) {
+        this.loadDoc = loadDoc;
+    }
+
+    
+    
     public void insertDocument() {
         try {
             TextDocument document = new TextDocument();
