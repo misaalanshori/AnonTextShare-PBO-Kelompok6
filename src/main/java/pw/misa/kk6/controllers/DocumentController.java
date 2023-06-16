@@ -28,13 +28,18 @@ public class DocumentController {
         this.loadDoc = new MenuLoadDoc(this);
         this.documentDao = new TextDocumentDao();
         this.listDocument = documentDao.selectLatest(15);
-
+        this.loadDocument = new TextDocument();
     }
 
     public void setLoadDoc(MenuLoadDoc loadDoc) {
         this.loadDoc = loadDoc;
     }
 
+    public void setLoadDocument(TextDocument loadDocument) {
+        this.loadDocument = loadDocument;
+    }
+
+    
     
     
     public void insertDocument() {
