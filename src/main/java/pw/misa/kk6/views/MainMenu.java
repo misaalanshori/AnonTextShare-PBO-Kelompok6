@@ -146,6 +146,7 @@ public class MainMenu extends javax.swing.JFrame {
         Akses = new javax.swing.JLabel();
         TombolAkses1 = new javax.swing.JButton();
         TombolBuatDok1 = new javax.swing.JButton();
+        Refresh = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -249,6 +250,14 @@ public class MainMenu extends javax.swing.JFrame {
         });
         getContentPane().add(TombolBuatDok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 220, -1));
 
+        Refresh.setText("Refresh");
+        Refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 250, -1, -1));
+
         jPanel1.setBackground(new java.awt.Color(0, 204, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -288,6 +297,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void TombolBuatDok1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolBuatDok1ActionPerformed
         dc.buatDoc();
     }//GEN-LAST:event_TombolBuatDok1ActionPerformed
+
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+        dc.isiLatesDocument();
+    }//GEN-LAST:event_RefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,6 +350,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel PasswordAkses;
     private javax.swing.JRadioButton RadioButton1;
     private javax.swing.JRadioButton RadioButton2;
+    private javax.swing.JButton Refresh;
     private javax.swing.JTable TabelDokumenTerbaru;
     private javax.swing.JLabel TipeAkses;
     private javax.swing.JButton TombolAkses1;
