@@ -59,9 +59,12 @@ public class CollectionController {
             List<TextDocument> documentList = new ArrayList<>();
 
             for (String kode : kodeList) {
-                TextDocument selected = documentDao.select(kode);
-                if (selected != null) {
-                    documentList.add(selected);
+                TextDocument document = new TextDocument();
+                document.setID(kode);
+                if (listDocument.contains(document.getID())) {
+                    documentList.add(document);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Dokumen dengan kode " + kode + " tidak ditemukan");
                 }
             }
 
@@ -132,7 +135,7 @@ public class CollectionController {
             JOptionPane.showMessageDialog(this.loadCollec, "Dokumen berhasil dihapus.");
             loadCollection = collectionDao.select(loadCollection.getID());
             loadCollection.setPass(pass);
-            
+
             isiList();
         }
         loadCollec.getKodeDok().setText("Kode Dokumen");
