@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import pw.misa.kk6.controllers.DocumentController;
 
@@ -39,10 +40,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
     public JTextField getIsi() {
         return Isi;
-    }
-
-    public JTextField getIsiDokumen() {
-        return IsiDokumen;
     }
 
     public JLabel getIsiTotalAkses() {
@@ -93,6 +90,18 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         return jList1;
     }
 
+    public JTextField getIsiKodeDok() {
+        return IsiKodeDok;
+    }
+
+    public JLabel getKodeDok() {
+        return KodeDok;
+    }
+
+    public JTextArea getIsiDok() {
+        return IsiDok;
+    }
+
     
 
     /**
@@ -107,20 +116,23 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         Dokumen = new javax.swing.JLabel();
         Hapus = new javax.swing.JButton();
-        Kembali = new javax.swing.JButton();
-        Judul = new javax.swing.JTextField();
-        Perbarui = new javax.swing.JButton();
-        TotalAkses = new javax.swing.JLabel();
-        IsiTotalAkses = new javax.swing.JLabel();
         Nama = new javax.swing.JTextField();
         Isi = new javax.swing.JTextField();
         Kirim = new javax.swing.JButton();
-        IsiDokumen = new javax.swing.JTextField();
         ScroolListKomen = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jPanel1 = new javax.swing.JPanel();
+        Kembali = new javax.swing.JButton();
+        TotalAkses = new javax.swing.JLabel();
+        IsiTotalAkses = new javax.swing.JLabel();
         Unlisted = new javax.swing.JRadioButton();
         Public = new javax.swing.JRadioButton();
-        jPanel1 = new javax.swing.JPanel();
+        KodeDok = new javax.swing.JLabel();
+        Perbarui = new javax.swing.JButton();
+        Judul = new javax.swing.JTextField();
+        IsiKodeDok = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        IsiDok = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -136,31 +148,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         });
         getContentPane().add(Hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 41, 237, -1));
 
-        Kembali.setText("Kembali");
-        Kembali.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KembaliActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 6, 237, -1));
-
-        Judul.setText("Judul");
-        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 6, 134, -1));
-
-        Perbarui.setText("perbarui");
-        Perbarui.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PerbaruiActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Perbarui, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 6, 89, -1));
-
-        TotalAkses.setText("Total Akses :");
-        getContentPane().add(TotalAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 44, -1, -1));
-
-        IsiTotalAkses.setText("IsiTotalAkses");
-        getContentPane().add(IsiTotalAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 44, -1, -1));
-
         Nama.setText("Nama ");
         getContentPane().add(Nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 234, 141, -1));
 
@@ -175,9 +162,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         });
         getContentPane().add(Kirim, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 234, 78, -1));
 
-        IsiDokumen.setText("Isi");
-        getContentPane().add(IsiDokumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 76, 310, 211));
-
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -187,28 +171,103 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
         getContentPane().add(ScroolListKomen, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 76, 237, -1));
 
+        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
+
+        Kembali.setText("Kembali");
+        Kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KembaliActionPerformed(evt);
+            }
+        });
+
+        TotalAkses.setText("Total Akses :");
+
+        IsiTotalAkses.setText("IsiTotalAkses");
+
         buttonGroup1.add(Unlisted);
         Unlisted.setText("Unlisted");
-        getContentPane().add(Unlisted, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 42, -1, -1));
 
         buttonGroup1.add(Public);
         Public.setText("Public");
-        getContentPane().add(Public, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 42, -1, -1));
 
-        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
+        KodeDok.setText("Kode Dokumen :");
+
+        Perbarui.setText("perbarui");
+        Perbarui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PerbaruiActionPerformed(evt);
+            }
+        });
+
+        Judul.setText("Judul");
+
+        IsiDok.setColumns(20);
+        IsiDok.setLineWrap(true);
+        IsiDok.setRows(5);
+        IsiDok.setText("Isi");
+        IsiDok.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(IsiDok);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(KodeDok)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addComponent(Perbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(TotalAkses)
+                                .addGap(6, 6, 6)
+                                .addComponent(IsiTotalAkses)
+                                .addGap(37, 37, 37)
+                                .addComponent(Unlisted)
+                                .addGap(12, 12, 12)
+                                .addComponent(Public)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Perbarui)
+                    .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(KodeDok)
+                    .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Unlisted)
+                    .addComponent(Public)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TotalAkses)
+                            .addComponent(IsiTotalAkses))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Kembali)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 300));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,17 +278,17 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
     private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
         dc.kembali();
-//        MainMenu frame2 = new MainMenu();  // Membuat instance frame sebelumnya
-//        frame2.setVisible(true);
     }//GEN-LAST:event_KembaliActionPerformed
 
     private void PerbaruiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerbaruiActionPerformed
         dc.updateDocument();
+        dc.reset();
     }//GEN-LAST:event_PerbaruiActionPerformed
 
     private void KirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KirimActionPerformed
         dc.insertComment();
         dc.isiComment();
+        dc.reset();
     }//GEN-LAST:event_KirimActionPerformed
 
     /**
@@ -267,11 +326,13 @@ public class MenuLoadDoc extends javax.swing.JFrame {
     private javax.swing.JLabel Dokumen;
     private javax.swing.JButton Hapus;
     private javax.swing.JTextField Isi;
-    private javax.swing.JTextField IsiDokumen;
+    private javax.swing.JTextArea IsiDok;
+    private javax.swing.JTextField IsiKodeDok;
     private javax.swing.JLabel IsiTotalAkses;
     private javax.swing.JTextField Judul;
     private javax.swing.JButton Kembali;
     private javax.swing.JButton Kirim;
+    private javax.swing.JLabel KodeDok;
     private javax.swing.JTextField Nama;
     private javax.swing.JButton Perbarui;
     private javax.swing.JRadioButton Public;
@@ -281,5 +342,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
