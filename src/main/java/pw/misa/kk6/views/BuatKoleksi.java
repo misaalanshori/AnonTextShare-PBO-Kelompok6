@@ -93,31 +93,33 @@ public class BuatKoleksi extends javax.swing.JFrame {
         TombolBuat = new javax.swing.JButton();
         IsiKodeBaru = new javax.swing.JTextField();
         KodeBaru = new javax.swing.JLabel();
-        Tombolkembali = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        Tombolkembali = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TabelDokumenTerbaru1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Judul.setText("Judul :");
-        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
         BuatKoleksi.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         BuatKoleksi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         BuatKoleksi.setText("Buat Koleksi");
-        getContentPane().add(BuatKoleksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
-        getContentPane().add(IsiJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 245, -1));
+        getContentPane().add(BuatKoleksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
+        getContentPane().add(IsiJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 245, -1));
 
         IsiKodeDok.setActionCommand("<Not Set>");
         IsiKodeDok.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        getContentPane().add(IsiKodeDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 244, -1));
+        getContentPane().add(IsiKodeDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 244, -1));
 
         MasukanDok.setText("Masukan Dokumen :");
-        getContentPane().add(MasukanDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-        getContentPane().add(IsiPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 242, -1));
+        getContentPane().add(MasukanDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, -1));
+        getContentPane().add(IsiPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 242, -1));
 
         Password.setText("Password :");
-        getContentPane().add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        getContentPane().add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
 
         TombolBuat.setText("Buat");
         TombolBuat.addActionListener(new java.awt.event.ActionListener() {
@@ -125,11 +127,13 @@ public class BuatKoleksi extends javax.swing.JFrame {
                 TombolBuatActionPerformed(evt);
             }
         });
-        getContentPane().add(TombolBuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
-        getContentPane().add(IsiKodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 242, -1));
+        getContentPane().add(TombolBuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
+        getContentPane().add(IsiKodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 242, -1));
 
         KodeBaru.setText("Kode baru :");
-        getContentPane().add(KodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+        getContentPane().add(KodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
 
         Tombolkembali.setText("Kembali");
         Tombolkembali.addActionListener(new java.awt.event.ActionListener() {
@@ -137,22 +141,65 @@ public class BuatKoleksi extends javax.swing.JFrame {
                 TombolkembaliActionPerformed(evt);
             }
         });
-        getContentPane().add(Tombolkembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 90, -1));
 
-        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
+        TabelDokumenTerbaru1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Judul", "Jumlah Akses"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelDokumenTerbaru1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelDokumenTerbaru1MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TabelDokumenTerbaru1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(364, 364, 364)
+                        .addComponent(Tombolkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addComponent(Tombolkembali)
+                .addGap(39, 39, 39))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 300));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,6 +211,10 @@ public class BuatKoleksi extends javax.swing.JFrame {
     private void TombolkembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolkembaliActionPerformed
         cc.kembali();
     }//GEN-LAST:event_TombolkembaliActionPerformed
+
+    private void TabelDokumenTerbaru1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelDokumenTerbaru1MouseClicked
+        //dc.isiField(TabelDokumenTerbaru.getSelectedRow());
+    }//GEN-LAST:event_TabelDokumenTerbaru1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -206,8 +257,10 @@ public class BuatKoleksi extends javax.swing.JFrame {
     private javax.swing.JLabel KodeBaru;
     private javax.swing.JLabel MasukanDok;
     private javax.swing.JLabel Password;
+    private javax.swing.JTable TabelDokumenTerbaru1;
     private javax.swing.JButton TombolBuat;
     private javax.swing.JButton Tombolkembali;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
