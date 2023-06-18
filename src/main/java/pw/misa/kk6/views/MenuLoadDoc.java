@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import pw.misa.kk6.controllers.DocumentController;
 
@@ -39,10 +40,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
     public JTextField getIsi() {
         return Isi;
-    }
-
-    public JTextField getIsiDokumen() {
-        return IsiDokumen;
     }
 
     public JLabel getIsiTotalAkses() {
@@ -93,6 +90,18 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         return jList1;
     }
 
+    public JTextField getIsiKodeDok() {
+        return IsiKodeDok;
+    }
+
+    public JLabel getKodeDok() {
+        return KodeDok;
+    }
+
+    public JTextArea getIsiDok() {
+        return IsiDok;
+    }
+
     
 
     /**
@@ -114,7 +123,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         Kembali = new javax.swing.JButton();
-        IsiDokumen = new javax.swing.JTextField();
         TotalAkses = new javax.swing.JLabel();
         IsiTotalAkses = new javax.swing.JLabel();
         Unlisted = new javax.swing.JRadioButton();
@@ -123,6 +131,8 @@ public class MenuLoadDoc extends javax.swing.JFrame {
         Perbarui = new javax.swing.JButton();
         Judul = new javax.swing.JTextField();
         IsiKodeDok = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        IsiDok = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,9 +180,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
             }
         });
 
-        IsiDokumen.setText("Isi");
-        IsiDokumen.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
         TotalAkses.setText("Total Akses :");
 
         IsiTotalAkses.setText("IsiTotalAkses");
@@ -194,28 +201,20 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
         Judul.setText("Judul");
 
+        IsiDok.setColumns(20);
+        IsiDok.setLineWrap(true);
+        IsiDok.setRows(5);
+        IsiDok.setText("Isi");
+        IsiDok.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(IsiDok);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(IsiDokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TotalAkses)
-                        .addGap(6, 6, 6)
-                        .addComponent(IsiTotalAkses)
-                        .addGap(37, 37, 37)
-                        .addComponent(Unlisted)
-                        .addGap(12, 12, 12)
-                        .addComponent(Public)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(Judul, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,9 +222,23 @@ public class MenuLoadDoc extends javax.swing.JFrame {
                                 .addComponent(KodeDok)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(Perbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89))))
+                        .addGap(89, 89, 89))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(TotalAkses)
+                                .addGap(6, 6, 6)
+                                .addComponent(IsiTotalAkses)
+                                .addGap(37, 37, 37)
+                                .addComponent(Unlisted)
+                                .addGap(12, 12, 12)
+                                .addComponent(Public)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,18 +253,17 @@ public class MenuLoadDoc extends javax.swing.JFrame {
                     .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(TotalAkses))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(IsiTotalAkses))
                     .addComponent(Unlisted)
-                    .addComponent(Public))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(Public)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TotalAkses)
+                            .addComponent(IsiTotalAkses))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Kembali)
-                    .addComponent(IsiDokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
 
@@ -266,17 +278,17 @@ public class MenuLoadDoc extends javax.swing.JFrame {
 
     private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
         dc.kembali();
-//        MainMenu frame2 = new MainMenu();  // Membuat instance frame sebelumnya
-//        frame2.setVisible(true);
     }//GEN-LAST:event_KembaliActionPerformed
 
     private void PerbaruiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerbaruiActionPerformed
         dc.updateDocument();
+        dc.reset();
     }//GEN-LAST:event_PerbaruiActionPerformed
 
     private void KirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KirimActionPerformed
         dc.insertComment();
         dc.isiComment();
+        dc.reset();
     }//GEN-LAST:event_KirimActionPerformed
 
     /**
@@ -314,7 +326,7 @@ public class MenuLoadDoc extends javax.swing.JFrame {
     private javax.swing.JLabel Dokumen;
     private javax.swing.JButton Hapus;
     private javax.swing.JTextField Isi;
-    private javax.swing.JTextField IsiDokumen;
+    private javax.swing.JTextArea IsiDok;
     private javax.swing.JTextField IsiKodeDok;
     private javax.swing.JLabel IsiTotalAkses;
     private javax.swing.JTextField Judul;
@@ -330,5 +342,6 @@ public class MenuLoadDoc extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

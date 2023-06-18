@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import pw.misa.kk6.controllers.DocumentController;
 
@@ -46,10 +47,6 @@ public class BuatDokumen extends javax.swing.JFrame {
 
     public JTextField getIsiPassword() {
         return IsiPassword;
-    }
-
-    public JTextField getIsiTeks() {
-        return IsiTeks;
     }
 
     public JLabel getJudul() {
@@ -96,6 +93,10 @@ public class BuatDokumen extends javax.swing.JFrame {
         return jPanel1;
     }
 
+    public JTextArea getIsiDok() {
+        return IsiDok;
+    }
+
     
     
 
@@ -110,7 +111,6 @@ public class BuatDokumen extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         Teks = new javax.swing.JLabel();
-        IsiTeks = new javax.swing.JTextField();
         IsiJudul = new javax.swing.JTextField();
         Judul = new javax.swing.JLabel();
         BuatDokumen = new javax.swing.JLabel();
@@ -124,13 +124,14 @@ public class BuatDokumen extends javax.swing.JFrame {
         KodeBaru = new javax.swing.JLabel();
         Password = new javax.swing.JLabel();
         Tipe = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        IsiDok = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Teks.setText("Teks :");
         getContentPane().add(Teks, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 83, -1, -1));
-        getContentPane().add(IsiTeks, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 83, 260, 121));
         getContentPane().add(IsiJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 49, 260, -1));
 
         Judul.setText("Judul :");
@@ -168,6 +169,8 @@ public class BuatDokumen extends javax.swing.JFrame {
             }
         });
         jPanel1.add(TombolBuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, -1, -1));
+
+        IsiKodeBaru.setText("Tidak Perlu Diisi!!");
         jPanel1.add(IsiKodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 269, -1));
 
         KodeBaru.setText("Kode baru :");
@@ -179,6 +182,12 @@ public class BuatDokumen extends javax.swing.JFrame {
         Tipe.setText("Tipe");
         jPanel1.add(Tipe, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
 
+        IsiDok.setColumns(20);
+        IsiDok.setRows(5);
+        jScrollPane1.setViewportView(IsiDok);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 80, 260, 150));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 440));
 
         pack();
@@ -187,6 +196,7 @@ public class BuatDokumen extends javax.swing.JFrame {
     private void TombolBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolBuatActionPerformed
         dc.insertDocument();
         dc.isiLatesDocument();
+        dc.reset();
     }//GEN-LAST:event_TombolBuatActionPerformed
 
     private void TombolkembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolkembaliActionPerformed
@@ -230,10 +240,10 @@ public class BuatDokumen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BuatDokumen;
+    private javax.swing.JTextArea IsiDok;
     private javax.swing.JTextField IsiJudul;
     private javax.swing.JTextField IsiKodeBaru;
     private javax.swing.JTextField IsiPassword;
-    private javax.swing.JTextField IsiTeks;
     private javax.swing.JLabel Judul;
     private javax.swing.JLabel KodeBaru;
     private javax.swing.JLabel Password;
@@ -245,5 +255,6 @@ public class BuatDokumen extends javax.swing.JFrame {
     private javax.swing.JRadioButton Unlisted;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

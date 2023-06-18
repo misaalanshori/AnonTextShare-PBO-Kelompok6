@@ -31,14 +31,26 @@ public class DocumentController {
 
     }
 
+    public void reset() {
+        buatDoc.getIsiJudul().setText("");
+        buatDoc.getIsiPassword().setText("");
+        buatDoc.getIsiDok().setText("");
+        buatDoc.getButtonGroup1().clearSelection();
+        loadDoc.getNama().setText("Nama");
+        loadDoc.getIsi().setText("Isi");
+        menuAkses.getIsiKode().setText("");
+        menuAkses.getIsiPasswordAkses().setText("");
+        menuAkses.getButtonGroup1().clearSelection();
+    }
+
     public void insertDocument() {
         try {
             TextDocument document = new TextDocument();
 
-            String title = this.buatDoc.getIsiJudul().getText();
-            String text = this.buatDoc.getIsiTeks().getText();
+            String title = this.buatDoc.getIsiJudul().getText().strip();
+            String text = this.buatDoc.getIsiDok().getText().strip();
             ButtonModel selectedButton = this.buatDoc.getButtonGroup1().getSelection();
-            String pass = this.buatDoc.getIsiPassword().getText();
+            String pass = this.buatDoc.getIsiPassword().getText().strip();
 
             // Periksa apakah ada komponen yang kosong
             if (title.isEmpty() || text.isEmpty() || selectedButton == null) {
@@ -63,11 +75,6 @@ public class DocumentController {
             buatDoc.setVisible(true);
             menuAkses.setVisible(false);
 
-            buatDoc.getIsiJudul().setText("");
-            buatDoc.getIsiPassword().setText("");
-            buatDoc.getIsiTeks().setText("");
-            buatDoc.getButtonGroup1().clearSelection();
-
             buatDoc.getIsiKodeBaru().setText(document.getID());
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this.buatDoc, "Gagal menyimpan dokumen. " + e.getMessage());
@@ -77,8 +84,8 @@ public class DocumentController {
     public void updateDocument() {
         try {
 
-            String title = loadDoc.getJudul().getText();
-            String text = loadDoc.getIsiDokumen().getText();
+            String title = loadDoc.getJudul().getText().strip();
+            String text = loadDoc.getIsiDok().getText().strip();
             ButtonModel selectedButton = loadDoc.getButtonGroup1().getSelection();
 
             // Periksa apakah ada komponen yang kosong atau input tidak valid
@@ -126,8 +133,8 @@ public class DocumentController {
 
     public void insertComment() {
         try {
-            String nama = loadDoc.getNama().getText();
-            String isiComment = loadDoc.getIsi().getText();
+            String nama = loadDoc.getNama().getText().strip();
+            String isiComment = loadDoc.getIsi().getText().strip();
 
             // Periksa apakah ada komponen yang kosong atau input tidak valid
             if (nama.isEmpty() || isiComment.isEmpty()) {
@@ -139,9 +146,6 @@ public class DocumentController {
             documentDao.insertComment(loadDocument.getID(), comment);
             loadDocument = documentDao.select(loadDocument.getID());
             loadDocument.setPass(pass);
-
-            loadDoc.getNama().setText("Nama");
-            loadDoc.getIsi().setText("Isi");
 
             isiComment();
         } catch (IllegalArgumentException e) {
@@ -178,11 +182,12 @@ public class DocumentController {
 
     public void aksesDoc() {
         TextDocument selected = documentDao.select(menuAkses.getIsiKode().getText().strip());
-        selected.setPass(menuAkses.getIsiPasswordAkses().getText());
+        selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
 
         loadDoc.getJudul().setText(selected.getTitle());
-        loadDoc.getIsiDokumen().setText(selected.getText());
+        loadDoc.getIsiDok().setText(selected.getText());
         loadDoc.getIsiTotalAkses().setText(Integer.toString(selected.getViewCount()));
+        loadDoc.getIsiKodeDok().setText(selected.getID());
 
         if (selected.getVisibility() == 1) {
             loadDoc.getButtonGroup1().setSelected(loadDoc.getPublic().getModel(), true);
@@ -192,12 +197,17 @@ public class DocumentController {
             }
         }
 
+        if ("".equals(selected.getPass())) {
+            loadDoc.getPerbarui().setEnabled(false);
+            loadDoc.getHapus().setEnabled(false);
+        } else {
+            loadDoc.getPerbarui().setEnabled(true);
+            loadDoc.getHapus().setEnabled(true);
+        }
+
         this.loadDocument = selected;
 
         isiComment();
-        menuAkses.getIsiKode().setText("");
-        menuAkses.getIsiPasswordAkses().setText("");
-        menuAkses.getButtonGroup1().clearSelection();
 
         loadDoc.setVisible(true);
         menuAkses.setVisible(false);
@@ -208,8 +218,9 @@ public class DocumentController {
         TextDocument document = documentDao.select(listDocument.get(row).getID());
 
         loadDoc.getJudul().setText(document.getTitle());
-        loadDoc.getIsiDokumen().setText(document.getText());
+        loadDoc.getIsiDok().setText(document.getText());
         loadDoc.getIsiTotalAkses().setText(Integer.toString(document.getViewCount()));
+        loadDoc.getIsiKodeDok().setText(document.getID());
 
         loadDoc.getPerbarui().setEnabled(false);
         loadDoc.getHapus().setEnabled(false);
@@ -238,10 +249,14 @@ public class DocumentController {
             buatDoc.setVisible(false);
             menuAkses.setVisible(true);
         }
+        reset();
+        buatDoc.getIsiKodeBaru().setText("Tidak Perlu Diisi!!");
     }
 
     public void buatDoc() {
         menuAkses.setVisible(false);
         buatDoc.setVisible(true);
+        reset();
+        buatDoc.getIsiKodeBaru().setText("Tidak Perlu Diisi!!");
     }
 }

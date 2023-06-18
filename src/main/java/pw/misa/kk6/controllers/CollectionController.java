@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pw.misa.kk6.dao.TextCollectionDao;
 import pw.misa.kk6.dao.TextDocumentDao;
 import pw.misa.kk6.models.TextCollection;
@@ -43,13 +44,23 @@ public class CollectionController {
         this.listDocument = documentDao.selectLatest(15);
     }
 
+    public void reset() {
+        buatCollec.getIsiJudul().setText("");
+        buatCollec.getIsiKodeDok().setText("");
+        buatCollec.getIsiPassword().setText("");
+        menuAkses.getIsiKode().setText("");
+        menuAkses.getIsiPasswordAkses().setText("");
+        menuAkses.getButtonGroup1().clearSelection();
+        loadCollec.getKodeDok().setText("Kode Dokumen");
+    }
+
     public void insertCollec() {
         try {
             TextCollection collection = new TextCollection();
 
-            String title = buatCollec.getIsiJudul().getText();
+            String title = buatCollec.getIsiJudul().getText().strip();
             List<String> kodeList = Arrays.asList(buatCollec.getIsiKodeDok().getText().split("\\s*,\\s*"));
-            String pass = buatCollec.getIsiPassword().getText();
+            String pass = buatCollec.getIsiPassword().getText().strip();
             if (title.isEmpty() || kodeList.isEmpty()) {
                 throw new IllegalArgumentException("Harap isi semua komponen yang diperlukan.");
             }
@@ -59,11 +70,16 @@ public class CollectionController {
             List<TextDocument> documentList = new ArrayList<>();
 
             for (String kode : kodeList) {
-                TextDocument document = new TextDocument();
-                document.setID(kode);
-                if (listDocument.contains(document.getID())) {
-                    documentList.add(document);
-                } else {
+                TextDocument document = documentDao.select(kode);
+                boolean found = false;
+                for (TextDocument doc : listDocument) {
+                    if (doc.getID().equals(kode)) {
+                        found = true;
+                        documentList.add(document);
+                        break;
+                    }
+                }
+                if (!found) {
                     JOptionPane.showMessageDialog(null, "Dokumen dengan kode " + kode + " tidak ditemukan");
                 }
             }
@@ -77,10 +93,6 @@ public class CollectionController {
                 JOptionPane.showMessageDialog(this.buatCollec, "Dokumen tidak ditemukan");
             }
 
-            buatCollec.getIsiJudul().setText("");
-            buatCollec.getIsiKodeDok().setText("");
-            buatCollec.getIsiPassword().setText("");
-
             buatCollec.setVisible(true);
 
             buatCollec.getIsiKodeBaru().setText(collection.getID());
@@ -91,7 +103,7 @@ public class CollectionController {
 
     public void updateCollec() {
         try {
-            String title = loadCollec.getJudul().getText();
+            String title = loadCollec.getJudul().getText().strip();
 
             if (title.isEmpty()) {
                 throw new IllegalArgumentException("Harap isi semua komponen yang diperlukan.");
@@ -138,7 +150,6 @@ public class CollectionController {
 
             isiList();
         }
-        loadCollec.getKodeDok().setText("Kode Dokumen");
 
     }
 
@@ -151,32 +162,26 @@ public class CollectionController {
         loadCollection.setPass(pass);
 
         isiList();
-
-        loadCollec.getKodeDok().setText("Kode Dokumen");
-
     }
 
     public void isiList() {
         DefaultListModel<String> documentListModel = new DefaultListModel<>();
         for (int i = 0; i < loadCollection.getContents().size(); i++) {
-            documentListModel.add(i, this.loadCollection.getContents().get(i).getID());
+            documentListModel.add(i, this.loadCollection.getContents().get(i).getTitle());
         }
         loadCollec.getListDokumen().setModel(documentListModel);
     }
 
     public void aksesCollec() {
         TextCollection selected = collectionDao.select(menuAkses.getIsiKode().getText().strip());
-        selected.setPass(menuAkses.getIsiPasswordAkses().getText());
+        selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
 
         loadCollec.getJudul().setText(selected.getTitle());
+        loadCollec.getIsiKodeKoleksi().setText(selected.getID());
 
         this.loadCollection = selected;
 
         isiList();
-
-        menuAkses.getIsiKode().setText("");
-        menuAkses.getIsiPasswordAkses().setText("");
-        menuAkses.getButtonGroup1().clearSelection();
 
         loadCollec.setVisible(true);
         menuAkses.setVisible(false);
@@ -188,8 +193,9 @@ public class CollectionController {
         selected.setPass(selected.getPass());
 
         loadDoc.getJudul().setText(selected.getTitle());
-        loadDoc.getIsiDokumen().setText(selected.getText());
+        loadDoc.getIsiDok().setText(selected.getText());
         loadDoc.getIsiTotalAkses().setText(Integer.toString(selected.getViewCount()));
+        loadDoc.getIsiKodeDok().setText(selected.getID());
 
         loadDoc.getPerbarui().setEnabled(false);
         loadDoc.getHapus().setEnabled(false);
@@ -214,6 +220,36 @@ public class CollectionController {
 
     }
 
+    public void isiLatesDocument() {
+        DefaultTableModel tabelDocument = new DefaultTableModel();
+        List<TextDocument> tempListDoc = this.listDocument;
+        this.listDocument = documentDao.selectLatest(tempListDoc.size());
+        tabelDocument.addColumn("ID");
+        tabelDocument.addColumn("Title");
+        tabelDocument.addColumn("View Count");
+        for (TextDocument document : listDocument) {
+            if (document.getVisibility() == 1) {
+                Object[] rowData = {document.getID(), document.getTitle(), document.getViewCount()};
+                tabelDocument.addRow(rowData);
+            }
+        }
+
+        buatCollec.getTabelDokumenTerbaru1().setModel(tabelDocument);
+    }
+
+    public void addDocLatesDocument(int row) {
+        TextDocument document = documentDao.select(listDocument.get(row).getID());
+
+        String currentText = buatCollec.getIsiKodeDok().getText().strip();
+        String updateText = currentText + ", " + document.getID();
+
+        if ("".equals(currentText)) {
+            buatCollec.getIsiKodeDok().setText(document.getID());
+        } else {
+            buatCollec.getIsiKodeDok().setText(updateText);
+        }
+    }
+
     public void kembali() {
         if (loadCollec.isVisible() == true) {
             loadCollec.setVisible(false);
@@ -225,10 +261,14 @@ public class CollectionController {
             buatCollec.setVisible(false);
             menuAkses.setVisible(true);
         }
+        reset();
+        buatCollec.getIsiKodeBaru().setText("Tidak Perlu Diisi!!");
     }
 
     public void buatCollec() {
         menuAkses.setVisible(false);
         buatCollec.setVisible(true);
+        reset();
+        buatCollec.getIsiKodeBaru().setText("Tidak Perlu Diisi!!");
     }
 }

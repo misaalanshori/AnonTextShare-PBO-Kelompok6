@@ -7,6 +7,8 @@ package pw.misa.kk6.views;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import pw.misa.kk6.controllers.CollectionController;
 
@@ -36,10 +38,6 @@ public class BuatKoleksi extends javax.swing.JFrame {
 
     public JTextField getIsiKodeBaru() {
         return IsiKodeBaru;
-    }
-
-    public JTextField getIsiKodeDok() {
-        return IsiKodeDok;
     }
 
     public JTextField getIsiPassword() {
@@ -73,6 +71,16 @@ public class BuatKoleksi extends javax.swing.JFrame {
     public JPanel getjPanel1() {
         return jPanel1;
     }
+
+    public JTable getTabelDokumenTerbaru1() {
+        return TabelDokumenTerbaru1;
+    }
+
+    public JTextArea getIsiKodeDok() {
+        return IsiKodeDok;
+    }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,55 +91,24 @@ public class BuatKoleksi extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Judul = new javax.swing.JLabel();
-        BuatKoleksi = new javax.swing.JLabel();
-        IsiJudul = new javax.swing.JTextField();
-        IsiKodeDok = new javax.swing.JTextField();
-        MasukanDok = new javax.swing.JLabel();
-        IsiPassword = new javax.swing.JTextField();
-        Password = new javax.swing.JLabel();
-        TombolBuat = new javax.swing.JButton();
-        IsiKodeBaru = new javax.swing.JTextField();
-        KodeBaru = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         Tombolkembali = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelDokumenTerbaru1 = new javax.swing.JTable();
+        BuatKoleksi = new javax.swing.JLabel();
+        Judul = new javax.swing.JLabel();
+        IsiJudul = new javax.swing.JTextField();
+        Password = new javax.swing.JLabel();
+        IsiPassword = new javax.swing.JTextField();
+        KodeBaru = new javax.swing.JLabel();
+        TombolBuat = new javax.swing.JButton();
+        IsiKodeBaru = new javax.swing.JTextField();
+        MasukanDok = new javax.swing.JLabel();
+        IsiKodeDok = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Judul.setText("Judul :");
-        getContentPane().add(Judul, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
-
-        BuatKoleksi.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        BuatKoleksi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BuatKoleksi.setText("Buat Koleksi");
-        getContentPane().add(BuatKoleksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
-        getContentPane().add(IsiJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 245, -1));
-
-        IsiKodeDok.setActionCommand("<Not Set>");
-        IsiKodeDok.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        getContentPane().add(IsiKodeDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 244, -1));
-
-        MasukanDok.setText("Masukan Dokumen :");
-        getContentPane().add(MasukanDok, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, -1));
-        getContentPane().add(IsiPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 242, -1));
-
-        Password.setText("Password :");
-        getContentPane().add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, -1, -1));
-
-        TombolBuat.setText("Buat");
-        TombolBuat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TombolBuatActionPerformed(evt);
-            }
-        });
-        getContentPane().add(TombolBuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, -1, -1));
-        getContentPane().add(IsiKodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 242, -1));
-
-        KodeBaru.setText("Kode baru :");
-        getContentPane().add(KodeBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 255));
 
@@ -175,28 +152,105 @@ public class BuatKoleksi extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(TabelDokumenTerbaru1);
 
+        BuatKoleksi.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        BuatKoleksi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BuatKoleksi.setText("Buat Koleksi");
+
+        Judul.setText("Judul :");
+
+        Password.setText("Password :");
+
+        KodeBaru.setText("Kode baru :");
+
+        TombolBuat.setText("Buat");
+        TombolBuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TombolBuatActionPerformed(evt);
+            }
+        });
+
+        IsiKodeBaru.setText("Tidak Perlu Diisi!!");
+
+        MasukanDok.setText("Masukan Dokumen :");
+
+        IsiKodeDok.setColumns(20);
+        IsiKodeDok.setLineWrap(true);
+        IsiKodeDok.setRows(5);
+        IsiKodeDok.setWrapStyleWord(true);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(364, 364, 364)
-                        .addComponent(Tombolkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Tombolkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(Judul)
+                                            .addGap(87, 87, 87)
+                                            .addComponent(IsiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(MasukanDok))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(KodeBaru)
+                                                .addGap(59, 59, 59)
+                                                .addComponent(IsiKodeBaru, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(Password)
+                                                .addGap(65, 65, 65)
+                                                .addComponent(IsiPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(TombolBuat)
+                                    .addGap(219, 219, 219)))
+                            .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(160, 160, 160)
+                            .addComponent(BuatKoleksi))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(BuatKoleksi)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(Judul))
+                                .addComponent(IsiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(MasukanDok))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Password)
+                                .addComponent(IsiPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addComponent(TombolBuat)
+                            .addGap(32, 32, 32)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(KodeBaru)
+                                .addComponent(IsiKodeBaru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1))
+                    .addComponent(IsiKodeDok, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
                 .addComponent(Tombolkembali)
-                .addGap(39, 39, 39))
+                .addGap(36, 36, 36))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 520));
@@ -206,6 +260,7 @@ public class BuatKoleksi extends javax.swing.JFrame {
 
     private void TombolBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolBuatActionPerformed
         cc.insertCollec();
+        cc.reset();
     }//GEN-LAST:event_TombolBuatActionPerformed
 
     private void TombolkembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolkembaliActionPerformed
@@ -213,7 +268,7 @@ public class BuatKoleksi extends javax.swing.JFrame {
     }//GEN-LAST:event_TombolkembaliActionPerformed
 
     private void TabelDokumenTerbaru1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelDokumenTerbaru1MouseClicked
-        //dc.isiField(TabelDokumenTerbaru.getSelectedRow());
+        cc.addDocLatesDocument(TabelDokumenTerbaru1.getSelectedRow());
     }//GEN-LAST:event_TabelDokumenTerbaru1MouseClicked
 
     /**
@@ -251,7 +306,7 @@ public class BuatKoleksi extends javax.swing.JFrame {
     private javax.swing.JLabel BuatKoleksi;
     private javax.swing.JTextField IsiJudul;
     private javax.swing.JTextField IsiKodeBaru;
-    private javax.swing.JTextField IsiKodeDok;
+    private javax.swing.JTextArea IsiKodeDok;
     private javax.swing.JTextField IsiPassword;
     private javax.swing.JLabel Judul;
     private javax.swing.JLabel KodeBaru;
@@ -261,6 +316,7 @@ public class BuatKoleksi extends javax.swing.JFrame {
     private javax.swing.JButton TombolBuat;
     private javax.swing.JButton Tombolkembali;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

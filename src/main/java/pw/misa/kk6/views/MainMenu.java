@@ -282,13 +282,16 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void TombolBuatCollecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolBuatCollecActionPerformed
         cc.buatCollec();
+        cc.isiLatesDocument();
     }//GEN-LAST:event_TombolBuatCollecActionPerformed
 
     private void TombolAkses1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TombolAkses1ActionPerformed
         if(RadioButton1.isSelected()){
             dc.aksesDoc();
+            dc.reset();
         }else if(RadioButton2.isSelected()){
             cc.aksesCollec();
+            cc.reset();
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih tipe terlebih dahulu.");
         }
