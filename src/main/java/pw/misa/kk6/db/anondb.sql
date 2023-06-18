@@ -432,6 +432,7 @@ BEGIN
     ELSE
         RAISE_APPLICATION_ERROR(-20021, 'Incorrect Collection password');
     END IF;
+    COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Collection with given ID not found
@@ -456,6 +457,7 @@ BEGIN
     ELSE
         RAISE_APPLICATION_ERROR(-20021, 'Incorrect Collection password');
     END IF;
+    COMMIT;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         -- Collection with given ID not found
