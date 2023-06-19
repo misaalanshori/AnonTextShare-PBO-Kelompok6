@@ -126,22 +126,28 @@ public class DocumentController {
 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this.loadDoc, "Gagal memperbarui dokumen. " + e.getMessage());
-        }catch(DaoException de){
+            loadDocument = documentDao.select(loadDocument.getID());
+            loadDoc.getJudul().setText(loadDocument.getTitle());
+            loadDoc.getIsiDok().setText(loadDocument.getText());
+        } catch (DaoException de) {
             JOptionPane.showMessageDialog(loadDoc, "Password yang anda masukan salah, jadi anda tidak bisa memperbarui dokumen ini!");
+            loadDocument = documentDao.select(loadDocument.getID());
+            loadDoc.getJudul().setText(loadDocument.getTitle());
+            loadDoc.getIsiDok().setText(loadDocument.getText());
         }
         loadDoc.setVisible(true);
     }
 
     public void deleteDocument() {
-        try{
-        int confirm = JOptionPane.showConfirmDialog(this.loadDoc, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            documentDao.delete(loadDocument.getID(), loadDocument.getPass());
-            this.menuAkses.setVisible(true);
-            this.loadDoc.setVisible(false);
-            JOptionPane.showMessageDialog(this.menuAkses, "Dokumen berhasil dihapus.");
-        }
-        }catch(DaoException de){
+        try {
+            int confirm = JOptionPane.showConfirmDialog(this.loadDoc, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                documentDao.delete(loadDocument.getID(), loadDocument.getPass());
+                this.menuAkses.setVisible(true);
+                this.loadDoc.setVisible(false);
+                JOptionPane.showMessageDialog(this.menuAkses, "Dokumen berhasil dihapus.");
+            }
+        } catch (DaoException de) {
             JOptionPane.showMessageDialog(loadDoc, "Password yang anda masukan salah, jadi anda tidak bisa menghapus dokumen ini!");
         }
     }
@@ -196,38 +202,38 @@ public class DocumentController {
     }
 
     public void aksesDoc() {
-        try{
+        try {
             TextDocument selected = documentDao.select(menuAkses.getIsiKode().getText().strip());
-        selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
+            selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
 
-        loadDoc.getJudul().setText(selected.getTitle());
-        loadDoc.getIsiDok().setText(selected.getText());
-        loadDoc.getIsiTotalAkses().setText(Integer.toString(selected.getViewCount()));
-        loadDoc.getIsiKodeDok().setText(selected.getID());
+            loadDoc.getJudul().setText(selected.getTitle());
+            loadDoc.getIsiDok().setText(selected.getText());
+            loadDoc.getIsiTotalAkses().setText(Integer.toString(selected.getViewCount()));
+            loadDoc.getIsiKodeDok().setText(selected.getID());
 
-        if (selected.getVisibility() == 1) {
-            loadDoc.getButtonGroup1().setSelected(loadDoc.getPublic().getModel(), true);
-        } else {
-            if (selected.getVisibility() == 0) {
-                loadDoc.getButtonGroup1().setSelected(loadDoc.getUnlisted().getModel(), true);
+            if (selected.getVisibility() == 1) {
+                loadDoc.getButtonGroup1().setSelected(loadDoc.getPublic().getModel(), true);
+            } else {
+                if (selected.getVisibility() == 0) {
+                    loadDoc.getButtonGroup1().setSelected(loadDoc.getUnlisted().getModel(), true);
+                }
             }
-        }
 
-        if ("".equals(selected.getPass())) {
-            loadDoc.getPerbarui().setEnabled(false);
-            loadDoc.getHapus().setEnabled(false);
-        } else {
-            loadDoc.getPerbarui().setEnabled(true);
-            loadDoc.getHapus().setEnabled(true);
-        }
+            if ("".equals(selected.getPass())) {
+                loadDoc.getPerbarui().setEnabled(false);
+                loadDoc.getHapus().setEnabled(false);
+            } else {
+                loadDoc.getPerbarui().setEnabled(true);
+                loadDoc.getHapus().setEnabled(true);
+            }
 
-        this.loadDocument = selected;
+            this.loadDocument = selected;
 
-        isiComment();
+            isiComment();
 
-        loadDoc.setVisible(true);
-        menuAkses.setVisible(false);
-        }catch(DaoException de){
+            loadDoc.setVisible(true);
+            menuAkses.setVisible(false);
+        } catch (DaoException de) {
             JOptionPane.showMessageDialog(menuAkses, "Dokumen tidak ditemukan");
         }
     }

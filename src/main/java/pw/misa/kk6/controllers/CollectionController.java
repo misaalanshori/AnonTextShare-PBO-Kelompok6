@@ -123,46 +123,62 @@ public class CollectionController {
             loadCollection.setContents(document);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(loadCollec, "Gagal memperbarui koleksi. " + e.getMessage());
+            loadCollection = collectionDao.select(loadCollection.getID());
+            loadCollec.getJudul().setText(loadCollection.getTitle());
+        } catch (DaoException de) {
+            JOptionPane.showMessageDialog(loadCollec, "Password yang anda masukan salah, jadi anda tidak bisa memperbarui koleksi ini!");
+            loadCollection = collectionDao.select(loadCollection.getID());
+            loadCollec.getJudul().setText(loadCollection.getTitle());
         }
         loadCollec.setVisible(true);
     }
 
     public void deleteCollec() {
-        int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            collectionDao.delete(this.loadCollection.getID(), this.loadCollection.getPass());
-            this.menuAkses.setVisible(true);
-            this.loadCollec.setVisible(false);
-            JOptionPane.showMessageDialog(this.menuAkses, "Koleksi berhasil dihapus.");
+        try {
+            int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                collectionDao.delete(this.loadCollection.getID(), this.loadCollection.getPass());
+                this.menuAkses.setVisible(true);
+                this.loadCollec.setVisible(false);
+                JOptionPane.showMessageDialog(this.menuAkses, "Koleksi berhasil dihapus.");
+            }
+        } catch (DaoException de) {
+            JOptionPane.showMessageDialog(loadCollec, "Password yang anda masukan salah, jadi anda tidak bisa menghapus koleksi ini!");
         }
-
     }
 
     public void deleteDoc() {
-        TextDocument selected = documentDao.select(this.loadCollec.getKodeDok().getText().strip());
+        try {
+            TextDocument selected = documentDao.select(this.loadCollec.getKodeDok().getText().strip());
 
-        int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
+            int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                String pass = loadCollection.getPass();
+                collectionDao.deleteDocument(loadCollection, selected);
+                JOptionPane.showMessageDialog(this.loadCollec, "Dokumen berhasil dihapus.");
+                loadCollection = collectionDao.select(loadCollection.getID());
+                loadCollection.setPass(pass);
+
+                isiList();
+            }
+        } catch (DaoException de) {
+            JOptionPane.showMessageDialog(loadCollec, "Password yang anda masukan salah, jadi anda tidak bisa menghapus dokumen di koleksi ini!");
+        }
+    }
+
+    public void addDoc() {
+        try {
+            TextDocument selected = documentDao.select(this.loadCollec.getKodeDok().getText().strip());
+
             String pass = loadCollection.getPass();
-            collectionDao.deleteDocument(loadCollection, selected);
-            JOptionPane.showMessageDialog(this.loadCollec, "Dokumen berhasil dihapus.");
+            collectionDao.insertDocument(loadCollection, selected);
             loadCollection = collectionDao.select(loadCollection.getID());
             loadCollection.setPass(pass);
 
             isiList();
+        } catch (DaoException de) {
+            JOptionPane.showMessageDialog(loadCollec, "Password yang anda masukan salah, jadi anda tidak bisa menambah dokumen di koleksi ini!");
         }
-
-    }
-
-    public void addDoc() {
-        TextDocument selected = documentDao.select(this.loadCollec.getKodeDok().getText().strip());
-
-        String pass = loadCollection.getPass();
-        collectionDao.insertDocument(loadCollection, selected);
-        loadCollection = collectionDao.select(loadCollection.getID());
-        loadCollection.setPass(pass);
-
-        isiList();
     }
 
     public void isiList() {
@@ -174,46 +190,33 @@ public class CollectionController {
     }
 
     public void aksesCollec() {
-        try{
+        try {
             TextCollection selected = collectionDao.select(menuAkses.getIsiKode().getText().strip());
-        
-        if (selected == null) {
-            JOptionPane.showMessageDialog(this.menuAkses, "Koleksi dengan kode " + menuAkses.getIsiKode().getText().strip() + " tidak ditemukan");
-            return;
-        }
-        
-        selected.setPass(selected.getPass());
-        System.out.println(selected.getPass());
-        String password = menuAkses.getIsiPasswordAkses().getText().strip();
-        System.out.println(selected.getID());
-        String collectionPassword = selected.getPass();
-        if (collectionPassword == null || !collectionPassword.equals(password)) {
-            JOptionPane.showMessageDialog(this.menuAkses, "Password salah");
-            return;
-        }
 
-        if ("".equals(selected.getPass())) {
-            loadCollec.getPerbarui().setEnabled(false);
-            loadCollec.getHapus().setEnabled(false);
-            loadCollec.getHapusKoleksi().setEnabled(false);
-            loadCollec.getTambahkan().setEnabled(false);
-        } else {
-            loadCollec.getPerbarui().setEnabled(true);
-            loadCollec.getHapus().setEnabled(true);
-            loadCollec.getHapusKoleksi().setEnabled(true);
-            loadCollec.getTambahkan().setEnabled(true);
-        }
+            selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
 
-        loadCollec.getJudul().setText(selected.getTitle());
-        loadCollec.getIsiKodeKoleksi().setText(selected.getID());
+            if ("".equals(selected.getPass())) {
+                loadCollec.getPerbarui().setEnabled(false);
+                loadCollec.getHapus().setEnabled(false);
+                loadCollec.getHapusKoleksi().setEnabled(false);
+                loadCollec.getTambahkan().setEnabled(false);
+            } else {
+                loadCollec.getPerbarui().setEnabled(true);
+                loadCollec.getHapus().setEnabled(true);
+                loadCollec.getHapusKoleksi().setEnabled(true);
+                loadCollec.getTambahkan().setEnabled(true);
+            }
 
-        this.loadCollection = selected;
+            loadCollec.getJudul().setText(selected.getTitle());
+            loadCollec.getIsiKodeKoleksi().setText(selected.getID());
 
-        isiList();
+            this.loadCollection = selected;
 
-        loadCollec.setVisible(true);
-        menuAkses.setVisible(false);
-        }catch(DaoException de){
+            isiList();
+
+            loadCollec.setVisible(true);
+            menuAkses.setVisible(false);
+        } catch (DaoException de) {
             JOptionPane.showMessageDialog(menuAkses, "Koleksi tidak ditemukan");
         }
     }
