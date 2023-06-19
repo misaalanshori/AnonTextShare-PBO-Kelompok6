@@ -135,7 +135,7 @@ public class CollectionController {
 
     public void deleteCollec() {
         try {
-            int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this.loadCollec, "Apakah Anda yakin ingin menghapus koleksi?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 collectionDao.delete(this.loadCollection.getID(), this.loadCollection.getPass());
                 this.menuAkses.setVisible(true);
