@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pw.misa.kk6.dao.DaoException;
 import pw.misa.kk6.dao.TextCollectionDao;
 import pw.misa.kk6.dao.TextDocumentDao;
 import pw.misa.kk6.models.TextCollection;
@@ -173,7 +174,9 @@ public class CollectionController {
     }
 
     public void aksesCollec() {
-        TextCollection selected = collectionDao.select(menuAkses.getIsiKode().getText().strip());
+        try{
+            TextCollection selected = collectionDao.select(menuAkses.getIsiKode().getText().strip());
+        
         if (selected == null) {
             JOptionPane.showMessageDialog(this.menuAkses, "Koleksi dengan kode " + menuAkses.getIsiKode().getText().strip() + " tidak ditemukan");
             return;
@@ -210,7 +213,9 @@ public class CollectionController {
 
         loadCollec.setVisible(true);
         menuAkses.setVisible(false);
-
+        }catch(DaoException de){
+            JOptionPane.showMessageDialog(menuAkses, "Koleksi tidak ditemukan");
+        }
     }
 
     public void loadDocument(int idx) {

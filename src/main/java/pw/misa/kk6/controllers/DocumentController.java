@@ -5,6 +5,7 @@ import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pw.misa.kk6.dao.DaoException;
 import pw.misa.kk6.dao.TextDocumentDao;
 import pw.misa.kk6.models.TextDocument;
 import pw.misa.kk6.views.BuatDokumen;
@@ -125,17 +126,23 @@ public class DocumentController {
 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this.loadDoc, "Gagal memperbarui dokumen. " + e.getMessage());
+        }catch(DaoException de){
+            JOptionPane.showMessageDialog(loadDoc, "Password yang anda masukan salah, jadi anda tidak bisa memperbarui dokumen ini!");
         }
         loadDoc.setVisible(true);
     }
 
     public void deleteDocument() {
+        try{
         int confirm = JOptionPane.showConfirmDialog(this.loadDoc, "Apakah Anda yakin ingin menghapus dokumen?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             documentDao.delete(loadDocument.getID(), loadDocument.getPass());
             this.menuAkses.setVisible(true);
             this.loadDoc.setVisible(false);
             JOptionPane.showMessageDialog(this.menuAkses, "Dokumen berhasil dihapus.");
+        }
+        }catch(DaoException de){
+            JOptionPane.showMessageDialog(loadDoc, "Password yang anda masukan salah, jadi anda tidak bisa menghapus dokumen ini!");
         }
     }
 
@@ -189,7 +196,8 @@ public class DocumentController {
     }
 
     public void aksesDoc() {
-        TextDocument selected = documentDao.select(menuAkses.getIsiKode().getText().strip());
+        try{
+            TextDocument selected = documentDao.select(menuAkses.getIsiKode().getText().strip());
         selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
 
         loadDoc.getJudul().setText(selected.getTitle());
@@ -219,7 +227,9 @@ public class DocumentController {
 
         loadDoc.setVisible(true);
         menuAkses.setVisible(false);
-
+        }catch(DaoException de){
+            JOptionPane.showMessageDialog(menuAkses, "Dokumen tidak ditemukan");
+        }
     }
 
     public void isiField(int row) {
