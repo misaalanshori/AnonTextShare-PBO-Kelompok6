@@ -28,7 +28,6 @@ public class CollectionController {
     private TextCollectionDao collectionDao;
     private TextDocumentDao documentDao;
     private List<TextDocument> listDocument;
-    private List<TextCollection> listCollection;
     private TextCollection loadCollection;
     private TextDocument Document;
     DocumentController dc;
@@ -175,7 +174,32 @@ public class CollectionController {
 
     public void aksesCollec() {
         TextCollection selected = collectionDao.select(menuAkses.getIsiKode().getText().strip());
-        selected.setPass(menuAkses.getIsiPasswordAkses().getText().strip());
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this.menuAkses, "Koleksi dengan kode " + menuAkses.getIsiKode().getText().strip() + " tidak ditemukan");
+            return;
+        }
+        
+        selected.setPass(selected.getPass());
+        System.out.println(selected.getPass());
+        String password = menuAkses.getIsiPasswordAkses().getText().strip();
+        System.out.println(selected.getID());
+        String collectionPassword = selected.getPass();
+        if (collectionPassword == null || !collectionPassword.equals(password)) {
+            JOptionPane.showMessageDialog(this.menuAkses, "Password salah");
+            return;
+        }
+
+        if ("".equals(selected.getPass())) {
+            loadCollec.getPerbarui().setEnabled(false);
+            loadCollec.getHapus().setEnabled(false);
+            loadCollec.getHapusKoleksi().setEnabled(false);
+            loadCollec.getTambahkan().setEnabled(false);
+        } else {
+            loadCollec.getPerbarui().setEnabled(true);
+            loadCollec.getHapus().setEnabled(true);
+            loadCollec.getHapusKoleksi().setEnabled(true);
+            loadCollec.getTambahkan().setEnabled(true);
+        }
 
         loadCollec.getJudul().setText(selected.getTitle());
         loadCollec.getIsiKodeKoleksi().setText(selected.getID());
